@@ -2,6 +2,7 @@ package com.open_source.worldwide.baking;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.open_source.worldwide.baking.models.Recipe;
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -17,13 +21,17 @@ import butterknife.ButterKnife;
 
 public class MainScreenAdapter extends RecyclerView.Adapter<MainScreenAdapter.MainViewHolder> {
 
+    private static final String TAG = MainScreenAdapter.class.toString();
+
     private Context mContext;
     private final OnItemClickListener mItemClickListener;
+    private ArrayList<Recipe> mRecipes;
 
-    public MainScreenAdapter(Context context, OnItemClickListener onItemClickListener) {
+    public MainScreenAdapter(Context context, ArrayList<Recipe> recipes, OnItemClickListener onItemClickListener) {
 
+        Log.i(TAG, "MainScreenAdapter: " + recipes);
         mContext = context;
-
+        mRecipes = recipes;
         mItemClickListener = onItemClickListener;
     }
 
@@ -46,21 +54,25 @@ public class MainScreenAdapter extends RecyclerView.Adapter<MainScreenAdapter.Ma
         return new MainViewHolder(view);
     }
 
+
     @Override
     public void onBindViewHolder(MainViewHolder holder, int position) {
 
-        Recipe recipe = Recipe.getRecipeByID(mContext, position);
+        Recipe recipe = mRecipes.get(position);
 
-        if (recipe != null) {
+        if (recipe == null) return;
+        Picasso.with(mContext).load(R.drawable.hellobaking).into(holder.recipeImage);
 
-            holder.recipeName.setText(recipe.getName());
-        }
+        holder.recipeName.setText(recipe.getName());
+
+        Log.i(TAG, "onBindViewHolder: " + recipe.getImage());
+
 
     }
 
     @Override
     public int getItemCount() {
-        return 3;
+        return mRecipes.size();
     }
 
     public class MainViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

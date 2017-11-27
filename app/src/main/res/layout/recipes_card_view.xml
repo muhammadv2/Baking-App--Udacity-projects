@@ -20,11 +20,11 @@
 
     <ImageView
         android:id="@+id/main_recipe_iv"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="240dp"
         android:contentDescription="@string/main_recipe_image_desc"
         android:scaleType="centerCrop"
-        android:src="@drawable/hello_baking" />
+        />
 
     <LinearLayout
         android:layout_width="match_parent"
