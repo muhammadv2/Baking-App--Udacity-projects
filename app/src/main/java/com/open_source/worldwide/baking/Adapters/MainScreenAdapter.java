@@ -1,4 +1,4 @@
-package com.open_source.worldwide.baking;
+package com.open_source.worldwide.baking.Adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.open_source.worldwide.baking.R;
 import com.open_source.worldwide.baking.models.Recipe;
 import com.squareup.picasso.Picasso;
 

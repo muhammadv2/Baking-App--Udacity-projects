@@ -2,14 +2,12 @@ package com.open_source.worldwide.baking.models;
 
 public class Recipe {
 
-    private static final String TAG = Recipe.class.toString();
-
-    private Integer mRecipeId;
+    private int mRecipeId;
     private String mName;
-    private Integer mServings;
+    private int mServings;
     private String mImageUrl;
 
-    public Recipe(int recipeId, String recipeName, Integer recipeServing, String recipeImage) {
+    public Recipe(int recipeId, String recipeName, int recipeServing, String recipeImage) {
 
         mRecipeId = recipeId;
         mName = recipeName;
@@ -20,7 +18,7 @@ public class Recipe {
     }
 
 
-    public Integer getRecipeId() {
+    public int getRecipeId() {
         return mRecipeId;
     }
 
@@ -28,7 +26,7 @@ public class Recipe {
         return mName;
     }
 
-    public Integer getServings() {
+    public int getServings() {
         return mServings;
     }
 

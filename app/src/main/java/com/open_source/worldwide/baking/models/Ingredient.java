@@ -2,22 +2,28 @@ package com.open_source.worldwide.baking.models;
 
 public class Ingredient {
 
-    private Integer quantity;
-    private String measure;
-    private String ingredient;
+    private int mQuantity;
+    private String mMeasure;
+    private String mIngredient;
 
-    public Integer getQuantity() {
-        return quantity;
+    public Ingredient(int quantity, String measure, String ingredient) {
+
+        mQuantity = quantity;
+        mMeasure = measure;
+        mIngredient = ingredient;
+    }
+
+    public int getQuantity() {
+        return mQuantity;
     }
 
     public String getMeasure() {
-        return measure;
+        return mMeasure;
     }
 
     public String getIngredient() {
-        return ingredient;
+        return mIngredient;
     }
-
 
 
 }

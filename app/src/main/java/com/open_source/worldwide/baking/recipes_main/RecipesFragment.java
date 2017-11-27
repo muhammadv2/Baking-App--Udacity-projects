@@ -1,29 +1,21 @@
 package com.open_source.worldwide.baking.recipes_main;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.open_source.worldwide.baking.MainScreenAdapter;
+import com.open_source.worldwide.baking.JsonUtils;
+import com.open_source.worldwide.baking.Adapters.MainScreenAdapter;
 import com.open_source.worldwide.baking.R;
-import com.open_source.worldwide.baking.models.Recipe;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
+import com.open_source.worldwide.baking.recipe_details.DetailsActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,10 +29,6 @@ public class RecipesFragment extends Fragment implements MainScreenAdapter.OnIte
 
     MainScreenAdapter mAdapter;
 
-    public static final String ID = "id";
-    public static final String RECIPE_NAME = "name";
-    public static final String RECIPE_SERVING = "servings";
-    public static final String RECIPE_IMAGE = "image";
 
     private OnFragmentInteractionListener mListener;
 
@@ -64,7 +52,8 @@ public class RecipesFragment extends Fragment implements MainScreenAdapter.OnIte
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mAdapter = new MainScreenAdapter(getActivity(), getRecipesFromJson(getActivity()), this);
+        mAdapter = new MainScreenAdapter(getActivity(),
+                JsonUtils.getRecipesFromJson(getActivity()), this);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -73,60 +62,14 @@ public class RecipesFragment extends Fragment implements MainScreenAdapter.OnIte
 
     @Override
     public void onClick(int position) {
-    }
 
-    public static ArrayList<Recipe> getRecipesFromJson(Context context) {
+        Intent intent = new Intent(getActivity(), DetailsActivity.class);
 
-        Integer id;
-        String recipeName;
-        Integer recipeServing;
-        String recipeImage;
-
-        ArrayList<Recipe> recipes = new ArrayList<>();
-
-        try {
-            JSONArray jsonArray = new JSONArray(loadJSONFromAsset(context));
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-                id = jsonObject.optInt(ID);
-                recipeName = jsonObject.optString(RECIPE_NAME);
-                recipeServing = jsonObject.optInt(RECIPE_SERVING);
-                recipeImage = jsonObject.getString(RECIPE_IMAGE);
-
-                Log.i(TAG, "getRecipesFromJson: " + recipeName + "" + id);
-
-                recipes.add(new Recipe(id, recipeName, recipeServing, recipeImage));
-
-            }
-
-        } catch (JSONException e) {
-            Toast.makeText(context, "error loading json", Toast.LENGTH_SHORT).show();
-        }
-
-        return recipes;
+        JsonUtils.getRecipeIngredients(getActivity(), position);
+        startActivity(intent);
 
     }
 
-    @Nullable
-    private static String loadJSONFromAsset(Context context) {
-
-        String json;
-        try {
-            InputStream is = context.getAssets().open("Recipes.json");
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            json = new String(buffer, "UTF-8");
-        } catch (IOException ex) {
-            Toast.makeText(context, R.string.error_loading_recipe, Toast.LENGTH_LONG)
-                    .show();
-            return null;
-        }
-        return json;
-
-    }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

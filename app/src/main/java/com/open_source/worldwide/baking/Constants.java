@@ -9,5 +9,9 @@ public final class Constants {
     public static final String RECIPE_SERVING = "servings";
     public static final String RECIPE_IMAGE = "image";
 
+    public static final String INGREDIENTS_ARRAY = "ingredients";
+    public static final String INGREDIENTS_QUANTITY = "quantity";
+    public static final String INGREDIENTS_MEASURE = "measure";
+    public static final String INGREDIENTS_INGREDIENT = "ingredient";
 
 }

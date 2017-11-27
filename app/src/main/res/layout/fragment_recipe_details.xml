@@ -1,7 +1,18 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.open_source.worldwide.baking.recipe_details.RecipeDetailsFragment">
 
-</FrameLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recipe_ingredient_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="360dp" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recipe_steps_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>
