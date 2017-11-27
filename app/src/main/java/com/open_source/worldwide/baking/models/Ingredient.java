@@ -1,4 +1,4 @@
-package com.open_source.worldwide.baking.recipe_details.models;
+package com.open_source.worldwide.baking.models;
 
 public class Ingredient {
 

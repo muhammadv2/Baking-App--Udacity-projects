@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<fragment xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:name="com.open_source.worldwide.baking.recipes_main.RecipesFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.open_source.worldwide.baking.recipes_main.RecipesActivity">
-
-    <android.support.v7.app.AlertController.RecycleListView
-        android:id="@+id/recipes_fragment_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-</android.support.constraint.ConstraintLayout>
+    tools:context="com.open_source.worldwide.baking.recipes_main.RecipesActivity"/>

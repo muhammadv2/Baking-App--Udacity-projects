@@ -1,8 +1,9 @@
-package com.open_source.worldwide.baking.recipe_details.models;
+package com.open_source.worldwide.baking.models;
+
 
 public class Step {
 
-    private Integer id;
+    private Integer stepId;
     private String shortDescription;
     private String description;
     private String videoURL;
@@ -11,7 +12,7 @@ public class Step {
     public Step(Integer id, String shortDescription,
                 String description, String videoURL, String thumbnailURL) {
 
-        this.id = id;
+        this.stepId = id;
         this.shortDescription = shortDescription;
         this.description = description;
         this.videoURL = videoURL;
@@ -19,8 +20,8 @@ public class Step {
 
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getStepId() {
+        return stepId;
     }
 
     public String getShortDescription() {
