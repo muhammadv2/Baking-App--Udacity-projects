@@ -25,4 +25,5 @@ public final class Constants {
     public static final String INGREDIENTS_PAGE_NAME = "Ingredients";
     public static final String STEPS_PAGE_NAME = "Steps";
 
+    public static final String DETAILS_FRAGMENT_PAGE_ID = "details_page";
 }

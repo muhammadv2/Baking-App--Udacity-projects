@@ -1,7 +1,6 @@
 package com.open_source.worldwide.baking.recipe_details;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
@@ -15,8 +14,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class DetailsActivity extends AppCompatActivity
-        implements RecipeDetailsFragment.OnFragmentInteractionListener {
+public class DetailsActivity extends AppCompatActivity {
 
     public static final String SHOW_DETAILS_ACTION = "details";
     public static final String SHOW_STEP_DETAILS_ACTION = "step";
@@ -30,10 +28,12 @@ public class DetailsActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
 
+        getSupportActionBar().setHomeButtonEnabled(true);
+
         Intent receivedIntent = getIntent();
         ButterKnife.bind(this);
 
-        if (receivedIntent.getAction() == SHOW_DETAILS_ACTION) {
+        if (receivedIntent.getAction() == (SHOW_DETAILS_ACTION)) {
 
             int recipeId = receivedIntent.getIntExtra(Constants.RECIPE_ID_KEY, -1);
 
@@ -53,9 +53,4 @@ public class DetailsActivity extends AppCompatActivity
 
     }
 
-
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
-    }
 }

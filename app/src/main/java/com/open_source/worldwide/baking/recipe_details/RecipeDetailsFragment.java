@@ -1,8 +1,6 @@
 package com.open_source.worldwide.baking.recipe_details;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -29,7 +27,6 @@ import butterknife.ButterKnife;
 public class RecipeDetailsFragment extends Fragment implements StepsAdapter.OnItemClickListener {
 
     private static final String TAG = RecipeDetailsFragment.class.toString();
-    private OnFragmentInteractionListener mListener;
 
     @BindView(R.id.recipe_details_rv)
     RecyclerView recipeDetailsRv;
@@ -51,7 +48,7 @@ public class RecipeDetailsFragment extends Fragment implements StepsAdapter.OnIt
     public static RecipeDetailsFragment newInstance(int page, int recipeId) {
         RecipeDetailsFragment fragmentFirst = new RecipeDetailsFragment();
         Bundle args = new Bundle();
-        args.putInt("someInt", page);
+        args.putInt(Constants.DETAILS_FRAGMENT_PAGE_ID, page);
         args.putInt(Constants.RECIPE_ID_KEY, recipeId);
         fragmentFirst.setArguments(args);
         return fragmentFirst;
@@ -66,7 +63,7 @@ public class RecipeDetailsFragment extends Fragment implements StepsAdapter.OnIt
 
         View view = inflater.inflate(R.layout.fragment_recipe_details, container, false);
 
-        page = getArguments().getInt("someInt");
+        page = getArguments().getInt(Constants.DETAILS_FRAGMENT_PAGE_ID);
         mRecipeId = getArguments().getInt(Constants.RECIPE_ID_KEY);
 
         ButterKnife.bind(this, view);
@@ -79,6 +76,8 @@ public class RecipeDetailsFragment extends Fragment implements StepsAdapter.OnIt
         super.onViewCreated(view, savedInstanceState);
 
         Log.i(TAG, "onViewCreated: " + mRecipeId);
+
+
 
         if (page == 0) {
 
@@ -107,30 +106,6 @@ public class RecipeDetailsFragment extends Fragment implements StepsAdapter.OnIt
         recipeDetailsRv.setAdapter(stepsAdapter);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
     @Override
     public void onClick(int position) {
 
@@ -138,8 +113,4 @@ public class RecipeDetailsFragment extends Fragment implements StepsAdapter.OnIt
         startActivity(intent);
     }
 
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
 }

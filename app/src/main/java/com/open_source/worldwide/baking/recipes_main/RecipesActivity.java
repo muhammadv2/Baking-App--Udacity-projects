@@ -15,10 +15,13 @@ public class RecipesActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipes);
 
-        RecipesFragment recipesFragment = new RecipesFragment();
-        FragmentManager supportFragmentManager = getSupportFragmentManager();
-        supportFragmentManager.beginTransaction()
-                .add(R.id.main_recipe_container, recipesFragment).commit();
+        if (savedInstanceState == null) {
+            RecipesFragment recipesFragment = new RecipesFragment();
+            FragmentManager supportFragmentManager = getSupportFragmentManager();
+            supportFragmentManager.beginTransaction()
+                    .add(R.id.main_recipe_container, recipesFragment).commit();
+        }
+
     }
 
     @Override
