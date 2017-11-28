@@ -3,4 +3,6 @@
     <color name="colorPrimary">#8BC34A</color>
     <color name="colorPrimaryDark">#558B2F</color>
     <color name="colorAccent">#64DD17</color>
+    <color name="text_light_background">#F1F8E9</color>
+    <color name="view_pager_tab_background">#C5E1A5</color>
 </resources>

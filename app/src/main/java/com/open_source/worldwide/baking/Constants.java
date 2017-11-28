@@ -21,4 +21,8 @@ public final class Constants {
     public static final String DETAILS_THUMBNAIL_URL = "thumbnailURL";
 
     public static final String RECIPE_ID_KEY = "recipe_key";
+
+    public static final String INGREDIENTS_PAGE_NAME = "Ingredients";
+    public static final String STEPS_PAGE_NAME = "Steps";
+
 }

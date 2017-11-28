@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,12 +27,12 @@ import butterknife.ButterKnife;
 
 public class RecipeDetailsFragment extends Fragment implements StepsAdapter.OnItemClickListener {
 
+    private static final String TAG = RecipeDetailsFragment.class.toString();
     private OnFragmentInteractionListener mListener;
 
-    @BindView(R.id.ingredient_rv)
-    RecyclerView ingredientRv;
-    @BindView(R.id.steps_rv)
-    RecyclerView stepsRv;
+    @BindView(R.id.recipe_details_rv)
+    RecyclerView recipeDetailsRv;
+
 
     private StepsAdapter stepsAdapter;
     private IngredientAdapter ingredientAdapter;
@@ -42,12 +43,30 @@ public class RecipeDetailsFragment extends Fragment implements StepsAdapter.OnIt
         // Required empty public constructor
     }
 
+    // Store instance variables
+    private int page;
+
+    // newInstance constructor for creating fragment with arguments
+    public static RecipeDetailsFragment newInstance(int page, int recipeId) {
+        RecipeDetailsFragment fragmentFirst = new RecipeDetailsFragment();
+        Bundle args = new Bundle();
+        args.putInt("someInt", page);
+        args.putInt(Constants.RECIPE_ID_KEY, recipeId);
+        fragmentFirst.setArguments(args);
+        return fragmentFirst;
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        setRetainInstance(true);
+
         View view = inflater.inflate(R.layout.fragment_recipe_details, container, false);
+
+        page = getArguments().getInt("someInt");
+        mRecipeId = getArguments().getInt(Constants.RECIPE_ID_KEY);
 
         ButterKnife.bind(this, view);
         // Inflate the layout for this fragment
@@ -58,33 +77,33 @@ public class RecipeDetailsFragment extends Fragment implements StepsAdapter.OnIt
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mRecipeId = getArguments().getInt(Constants.RECIPE_ID_KEY);
+        Log.i(TAG, "onViewCreated: " + mRecipeId);
 
-        handleStepsView(mRecipeId);
+        if (page == 0) {
 
-        handleIngredientsView(mRecipeId);
+            handleIngredientsView(mRecipeId);
+        } else {
+
+            handleStepsView(mRecipeId);
+        }
+
+        recipeDetailsRv.setHasFixedSize(true);
+        recipeDetailsRv.setLayoutManager(new LinearLayoutManager(getActivity()));
+
     }
 
     private void handleIngredientsView(int recipeId) {
-
         ArrayList<Ingredient> ingredients = JsonUtils.getRecipeIngredients(getActivity(), recipeId);
 
         ingredientAdapter = new IngredientAdapter(getActivity(), ingredients);
-        ingredientRv.setAdapter(ingredientAdapter);
-        ingredientRv.setHasFixedSize(true);
-        ingredientRv.setLayoutManager(new LinearLayoutManager(getActivity()));
-
+        recipeDetailsRv.setAdapter(ingredientAdapter);
     }
 
     private void handleStepsView(int recipeId) {
-
         ArrayList<Step> steps = JsonUtils.getStepsFromJson(getActivity(), recipeId);
 
         stepsAdapter = new StepsAdapter(getActivity(), steps, this);
-        stepsRv.setAdapter(stepsAdapter);
-        stepsRv.setHasFixedSize(true);
-        stepsRv.setLayoutManager(new LinearLayoutManager(getActivity()));
-
+        recipeDetailsRv.setAdapter(stepsAdapter);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

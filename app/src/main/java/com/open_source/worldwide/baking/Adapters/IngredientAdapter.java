@@ -45,7 +45,8 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
 
         String quantity_measure = ingredient.getQuantity() + " " + ingredient.getMeasure();
         holder.ingredientMeasure.setText(quantity_measure);
-        holder.ingredientMaterial.setText(ingredient.getIngredient());
+        String ingredientDetails = "of " + ingredient.getIngredient();
+        holder.ingredientMaterial.setText(ingredientDetails);
 
     }
 

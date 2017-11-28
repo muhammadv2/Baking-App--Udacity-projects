@@ -2,7 +2,6 @@ package com.open_source.worldwide.baking;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.open_source.worldwide.baking.models.Ingredient;
@@ -18,8 +17,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 public class JsonUtils {
-
-    private static final String TAG = JsonUtils.class.toString();
 
     public static ArrayList<Recipe> getRecipesFromJson(Context context) {
 
@@ -72,7 +69,6 @@ public class JsonUtils {
                 measure = ingredientsObject.getString(Constants.INGREDIENTS_MEASURE);
                 ingredient = ingredientsObject.getString(Constants.INGREDIENTS_INGREDIENT);
 
-                Log.i(TAG, "getRecipeIngredients: " + quantity + "  " + measure);
                 ingredients.add(new Ingredient(quantity, measure, ingredient));
 
 
@@ -110,7 +106,6 @@ public class JsonUtils {
                 videoUrl = jsonObject.getString(Constants.DETAILS_VIDEO_URL);
                 thumbnailUrl = jsonObject.getString(Constants.DETAILS_THUMBNAIL_URL);
 
-                Log.i(TAG, "getRecipesFromJson: " + shortDescription + "" + id);
 
                 steps.add(new Step(id, shortDescription, description, videoUrl, thumbnailUrl));
 
