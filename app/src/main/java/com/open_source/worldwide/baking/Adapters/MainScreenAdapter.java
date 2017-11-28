@@ -30,7 +30,6 @@ public class MainScreenAdapter extends RecyclerView.Adapter<MainScreenAdapter.Ma
 
     public MainScreenAdapter(Context context, ArrayList<Recipe> recipes, OnItemClickListener onItemClickListener) {
 
-        Log.i(TAG, "MainScreenAdapter: " + recipes);
         mContext = context;
         mRecipes = recipes;
         mItemClickListener = onItemClickListener;

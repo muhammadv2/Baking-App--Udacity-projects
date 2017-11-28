@@ -12,8 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.open_source.worldwide.baking.JsonUtils;
 import com.open_source.worldwide.baking.Adapters.MainScreenAdapter;
+import com.open_source.worldwide.baking.Constants;
+import com.open_source.worldwide.baking.JsonUtils;
 import com.open_source.worldwide.baking.R;
 import com.open_source.worldwide.baking.recipe_details.DetailsActivity;
 
@@ -64,8 +65,7 @@ public class RecipesFragment extends Fragment implements MainScreenAdapter.OnIte
     public void onClick(int position) {
 
         Intent intent = new Intent(getActivity(), DetailsActivity.class);
-
-        JsonUtils.getRecipeIngredients(getActivity(), position);
+        intent.putExtra(Constants.RECIPE_ID_KEY, position);
         startActivity(intent);
 
     }

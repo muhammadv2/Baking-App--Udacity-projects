@@ -54,7 +54,7 @@ public class JsonUtils {
 
     public static ArrayList<Ingredient> getRecipeIngredients(Context context, int recipeId) {
 
-        Integer quantity;
+        int quantity;
         String measure;
         String ingredient;
 
@@ -87,28 +87,32 @@ public class JsonUtils {
     }
 
 
-    public static ArrayList<Step> getStepsFromJson(Context context) {
+    public static ArrayList<Step> getStepsFromJson(Context context, int recipeId) {
 
-        Integer id;
-        String recipeName;
-        Integer recipeServing;
-        String recipeImage;
+        int id;
+        String shortDescription;
+        String description;
+        String videoUrl;
+        String thumbnailUrl;
 
         ArrayList<Step> steps = new ArrayList<>();
 
         try {
-            JSONArray jsonArray = new JSONArray(loadJSONFromAsset(context));
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
+            JSONArray mainArray = new JSONArray(loadJSONFromAsset(context));
+            JSONObject jsonMainObjects = mainArray.getJSONObject(recipeId);
+            JSONArray stepsArray = jsonMainObjects.getJSONArray(Constants.STEPS_ARRAY);
+            for (int i = 0; i < stepsArray.length(); i++) {
+                JSONObject jsonObject = stepsArray.getJSONObject(i);
 
                 id = jsonObject.optInt(Constants.ID);
-                recipeName = jsonObject.optString(Constants.RECIPE_NAME);
-                recipeServing = jsonObject.optInt(Constants.RECIPE_SERVING);
-                recipeImage = jsonObject.getString(Constants.RECIPE_IMAGE);
+                shortDescription = jsonObject.optString(Constants.DETAILS_SHORT_DESCRIPTION);
+                description = jsonObject.optString(Constants.DETAILS_DESCRIPTION);
+                videoUrl = jsonObject.getString(Constants.DETAILS_VIDEO_URL);
+                thumbnailUrl = jsonObject.getString(Constants.DETAILS_THUMBNAIL_URL);
 
-                Log.i(TAG, "getRecipesFromJson: " + recipeName + "" + id);
+                Log.i(TAG, "getRecipesFromJson: " + shortDescription + "" + id);
 
-//                ingredients.add(new Recipe(id, recipeName, recipeServing, recipeImage));
+                steps.add(new Step(id, shortDescription, description, videoUrl, thumbnailUrl));
 
             }
 
