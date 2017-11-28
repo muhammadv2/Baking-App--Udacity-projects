@@ -16,6 +16,7 @@ import com.open_source.worldwide.baking.Adapters.StepsAdapter;
 import com.open_source.worldwide.baking.Constants;
 import com.open_source.worldwide.baking.JsonUtils;
 import com.open_source.worldwide.baking.R;
+import com.open_source.worldwide.baking.models.Ingredient;
 import com.open_source.worldwide.baking.models.Step;
 
 import java.util.ArrayList;
@@ -59,9 +60,27 @@ public class RecipeDetailsFragment extends Fragment implements StepsAdapter.OnIt
 
         mRecipeId = getArguments().getInt(Constants.RECIPE_ID_KEY);
 
-        ArrayList<Step> stepsFromJson = JsonUtils.getStepsFromJson(getActivity(), mRecipeId);
+        handleStepsView(mRecipeId);
 
-        stepsAdapter = new StepsAdapter(getActivity(), stepsFromJson, this);
+        handleIngredientsView(mRecipeId);
+    }
+
+    private void handleIngredientsView(int recipeId) {
+
+        ArrayList<Ingredient> ingredients = JsonUtils.getRecipeIngredients(getActivity(), recipeId);
+
+        ingredientAdapter = new IngredientAdapter(getActivity(), ingredients);
+        ingredientRv.setAdapter(ingredientAdapter);
+        ingredientRv.setHasFixedSize(true);
+        ingredientRv.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+    }
+
+    private void handleStepsView(int recipeId) {
+
+        ArrayList<Step> steps = JsonUtils.getStepsFromJson(getActivity(), recipeId);
+
+        stepsAdapter = new StepsAdapter(getActivity(), steps, this);
         stepsRv.setAdapter(stepsAdapter);
         stepsRv.setHasFixedSize(true);
         stepsRv.setLayoutManager(new LinearLayoutManager(getActivity()));

@@ -30,7 +30,7 @@ public class DetailsActivity extends AppCompatActivity
 
         detailsFragment.setArguments(bundle);
         supportFragmentManager.beginTransaction().
-                add(R.id.steps_frm, detailsFragment).commit();
+                add(R.id.recipes_details_container, detailsFragment).commit();
 
     }
 

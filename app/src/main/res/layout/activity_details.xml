@@ -7,11 +7,11 @@
     tools:context="com.open_source.worldwide.baking.recipe_details.RecipeDetailsFragment">
 
 <FrameLayout
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/ingredient_frm"/>
+    android:id="@+id/recipes_container"/>
 <FrameLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/steps_frm"/>
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/recipes_details_container"/>
 </LinearLayout>
