@@ -25,7 +25,7 @@ public class RecipesFragment extends Fragment implements MainScreenAdapter.OnIte
 
     private static final String TAG = RecipesFragment.class.toString();
 
-    @BindView(R.id.main_recipe_container)
+    @BindView(R.id.recipes_rv)
     RecyclerView mRecyclerView;
 
     MainScreenAdapter mAdapter;
@@ -69,6 +69,7 @@ public class RecipesFragment extends Fragment implements MainScreenAdapter.OnIte
 
         Intent intent = new Intent(getActivity(), DetailsActivity.class);
         intent.putExtra(Constants.RECIPE_ID_KEY, position);
+        intent.setAction(DetailsActivity.SHOW_DETAILS_ACTION);
         startActivity(intent);
 
     }

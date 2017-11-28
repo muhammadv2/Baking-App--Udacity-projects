@@ -1,6 +1,7 @@
 package com.open_source.worldwide.baking.recipe_details;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -133,6 +134,8 @@ public class RecipeDetailsFragment extends Fragment implements StepsAdapter.OnIt
     @Override
     public void onClick(int position) {
 
+        Intent intent = new Intent(getActivity(), DetailsActivity.class);
+        startActivity(intent);
     }
 
     public interface OnFragmentInteractionListener {

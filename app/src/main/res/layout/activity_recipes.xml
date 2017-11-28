@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:name="com.open_source.worldwide.baking.recipes_main.RecipesFragment"
+    android:id="@+id/main_recipe_container"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    tools:context="com.open_source.worldwide.baking.recipes_main.RecipesActivity"/>
+    tools:context="com.open_source.worldwide.baking.recipes_main.RecipesActivity" />

@@ -1,7 +1,5 @@
 package com.open_source.worldwide.baking.recipe_details;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,7 +10,6 @@ import com.open_source.worldwide.baking.R;
 
 public class StepDetailsFragment extends Fragment {
 
-    private OnFragmentInteractionListener mListener;
 
     public StepDetailsFragment() {
         // Required empty public constructor
@@ -26,31 +23,9 @@ public class StepDetailsFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_step_details, container, false);
     }
 
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
 
 
-    public interface OnFragmentInteractionListener {
-        void onFragmentInteraction(Uri uri);
-    }
+
+
+
 }
