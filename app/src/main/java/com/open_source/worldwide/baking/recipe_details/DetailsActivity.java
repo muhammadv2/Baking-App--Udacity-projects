@@ -21,7 +21,6 @@ public class DetailsActivity extends AppCompatActivity {
     @BindView(R.id.view_pager)
     ViewPager mViewPager;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

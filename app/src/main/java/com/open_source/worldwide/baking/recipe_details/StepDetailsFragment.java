@@ -1,5 +1,6 @@
 package com.open_source.worldwide.baking.recipe_details;
 
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -44,10 +45,6 @@ public class StepDetailsFragment extends Fragment {
     @BindView(R.id.step_next_step)
     TextView nextStep;
 
-    private int currentWindow;
-    private long playbackPosition;
-    private boolean playWhenReady;
-
     private int stepId;
     private int recipeId;
 
@@ -71,6 +68,8 @@ public class StepDetailsFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
+
         recipeId = getArguments().getInt(Constants.RECIPE_ID_KEY);
         stepId = getArguments().getInt(Constants.STEP_ID_KEY);
 
@@ -84,12 +83,22 @@ public class StepDetailsFragment extends Fragment {
             initializePlayer(Uri.parse(stepVideo));
         } else if (!stepThumbnail.equals("")) {
             initializePlayer(Uri.parse(stepThumbnail));
-
+        } else {
+            setDefaultImageIfNoVideo();
         }
+
 
         detailsDescription.setText(step.getDescription());
 
+        previousStep.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
     }
+
 
     private void initializePlayer(Uri uri) {
 
@@ -99,8 +108,7 @@ public class StepDetailsFragment extends Fragment {
 
         exoPlayerView.setPlayer(simpleExoPlayer);
 
-        simpleExoPlayer.setPlayWhenReady(playWhenReady);
-        simpleExoPlayer.seekTo(currentWindow, playbackPosition);
+        simpleExoPlayer.setPlayWhenReady(true);
 
         MediaSource mediaSource = buildMediaSource(uri);
         simpleExoPlayer.prepare(mediaSource, true, false);
@@ -110,6 +118,18 @@ public class StepDetailsFragment extends Fragment {
         return new ExtractorMediaSource(uri,
                 new DefaultHttpDataSourceFactory("Baking"),
                 new DefaultExtractorsFactory(), null, null);
+    }
+
+    private void setDefaultImageIfNoVideo() {
+        exoPlayerView.setDefaultArtwork(BitmapFactory.decodeResource
+                (getResources(), R.drawable.stew));
+        simpleExoPlayer = ExoPlayerFactory.newSimpleInstance(
+                getActivity(),
+                new DefaultTrackSelector(), new DefaultLoadControl());
+
+        exoPlayerView.hideController();
+        exoPlayerView.setUseController(false);
+        exoPlayerView.setPlayer(simpleExoPlayer);
     }
 
     private void releasePlayer() {

@@ -2,10 +2,11 @@ package com.open_source.worldwide.baking.recipes_main;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -30,13 +31,17 @@ public class RecipesFragment extends Fragment implements MainScreenAdapter.OnIte
 
     MainScreenAdapter mAdapter;
 
+    public static boolean isTablet(Context context) {
+        return (context.getResources().getConfiguration().screenLayout
+                & Configuration.SCREENLAYOUT_SIZE_MASK)
+                >= Configuration.SCREENLAYOUT_SIZE_LARGE;
+    }
 
-    private OnFragmentInteractionListener mListener;
+
 
     public RecipesFragment() {
         // Required empty public constructor
     }
-
 
 
     @Override
@@ -60,8 +65,12 @@ public class RecipesFragment extends Fragment implements MainScreenAdapter.OnIte
                 JsonUtils.getRecipesFromJson(getActivity()), this);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        if (isTablet(getActivity())) {
+            mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+        } else {
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        }
     }
 
     @Override
@@ -75,33 +84,5 @@ public class RecipesFragment extends Fragment implements MainScreenAdapter.OnIte
     }
 
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-
-    }
-
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
 }

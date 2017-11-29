@@ -35,6 +35,7 @@ public class RecipeDetailsFragment extends Fragment implements StepsAdapter.OnIt
 
     private int mRecipeId;
 
+
     public RecipeDetailsFragment() {
         // Required empty public constructor
     }
@@ -73,9 +74,6 @@ public class RecipeDetailsFragment extends Fragment implements StepsAdapter.OnIt
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Log.i(TAG, "onViewCreated: " + mRecipeId);
-
-
         if (page == 0) {
 
             handleIngredientsView(mRecipeId);
@@ -85,9 +83,12 @@ public class RecipeDetailsFragment extends Fragment implements StepsAdapter.OnIt
         }
 
         recipeDetailsRv.setHasFixedSize(true);
-        recipeDetailsRv.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+
+        Log.i(TAG, "onViewCreated: else is invoked");
+        recipeDetailsRv.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
+
 
     private void handleIngredientsView(int recipeId) {
         ArrayList<Ingredient> ingredients = JsonUtils.getRecipeIngredients(getActivity(), recipeId);
