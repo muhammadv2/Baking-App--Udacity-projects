@@ -2,13 +2,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context="com.open_source.worldwide.baking.recipe_details.StepDetailsFragment">
 
     <com.google.android.exoplayer2.ui.SimpleExoPlayerView
         android:layout_width="match_parent"
         android:id="@+id/simple_exoplayer_view"
-        android:layout_height="240dp" />
+        app:controller_layout_id="@layout/exo_player_controller_ui"
+        android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/step_details_description_tv"

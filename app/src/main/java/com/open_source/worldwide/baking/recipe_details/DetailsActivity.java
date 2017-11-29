@@ -46,8 +46,10 @@ public class DetailsActivity extends AppCompatActivity {
 
 
             Bundle bundle = new Bundle();
-            bundle.putStringArrayList(Constants.VIDEO_URLS_KEY,
-                    receivedIntent.getStringArrayListExtra(Constants.VIDEO_URLS_KEY));
+            bundle.putInt(Constants.STEP_ID_KEY,
+                    receivedIntent.getIntExtra(Constants.STEP_ID_KEY, -1));
+            bundle.putInt(Constants.RECIPE_ID_KEY,
+                    receivedIntent.getIntExtra(Constants.RECIPE_ID_KEY, -1));
 
             stepDetailsFragment.setArguments(bundle);
 

@@ -19,7 +19,9 @@ import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.open_source.worldwide.baking.Constants;
+import com.open_source.worldwide.baking.JsonUtils;
 import com.open_source.worldwide.baking.R;
+import com.open_source.worldwide.baking.models.Step;
 
 import java.util.ArrayList;
 
@@ -47,6 +49,7 @@ public class StepDetailsFragment extends Fragment {
     private boolean playWhenReady;
 
     private int stepId;
+    private int recipeId;
 
 
     public StepDetailsFragment() {
@@ -68,7 +71,23 @@ public class StepDetailsFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        urls = getArguments().getStringArrayList(Constants.VIDEO_URLS_KEY);
+        recipeId = getArguments().getInt(Constants.RECIPE_ID_KEY);
+        stepId = getArguments().getInt(Constants.STEP_ID_KEY);
+
+        ArrayList<Step> steps = JsonUtils.getStepsFromJson(getActivity(), recipeId);
+        Step step = steps.get(stepId);
+
+        String stepVideo = step.getVideoURL();
+        String stepThumbnail = step.getThumbnailURL();
+
+        if (!stepVideo.equals("")) {
+            initializePlayer(Uri.parse(stepVideo));
+        } else if (!stepThumbnail.equals("")) {
+            initializePlayer(Uri.parse(stepThumbnail));
+
+        }
+
+        detailsDescription.setText(step.getDescription());
 
     }
 
@@ -94,9 +113,11 @@ public class StepDetailsFragment extends Fragment {
     }
 
     private void releasePlayer() {
-        simpleExoPlayer.stop();
-        simpleExoPlayer.release();
-        simpleExoPlayer = null;
+        if (simpleExoPlayer != null) {
+            simpleExoPlayer.stop();
+            simpleExoPlayer.release();
+            simpleExoPlayer = null;
+        }
     }
 
     @Override

@@ -110,7 +110,8 @@ public class RecipeDetailsFragment extends Fragment implements StepsAdapter.OnIt
     public void onClick(int position) {
 
         Intent intent = new Intent(getActivity(), DetailsActivity.class);
-        intent.putExtra(Constants.VIDEO_URLS_KEY, position);
+        intent.putExtra(Constants.RECIPE_ID_KEY, mRecipeId);
+        intent.putExtra(Constants.STEP_ID_KEY, position);
         startActivity(intent);
     }
 
