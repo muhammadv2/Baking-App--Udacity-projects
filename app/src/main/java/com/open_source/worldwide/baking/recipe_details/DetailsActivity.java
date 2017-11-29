@@ -17,7 +17,6 @@ import butterknife.ButterKnife;
 public class DetailsActivity extends AppCompatActivity {
 
     public static final String SHOW_DETAILS_ACTION = "details";
-    public static final String SHOW_STEP_DETAILS_ACTION = "step";
 
     @BindView(R.id.view_pager)
     ViewPager mViewPager;
@@ -27,8 +26,6 @@ public class DetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
-
-        getSupportActionBar().setHomeButtonEnabled(true);
 
         Intent receivedIntent = getIntent();
         ButterKnife.bind(this);
@@ -46,6 +43,14 @@ public class DetailsActivity extends AppCompatActivity {
             mViewPager.setVisibility(View.GONE);
 
             StepDetailsFragment stepDetailsFragment = new StepDetailsFragment();
+
+
+            Bundle bundle = new Bundle();
+            bundle.putStringArrayList(Constants.VIDEO_URLS_KEY,
+                    receivedIntent.getStringArrayListExtra(Constants.VIDEO_URLS_KEY));
+
+            stepDetailsFragment.setArguments(bundle);
+
             FragmentManager supportFragmentManager = getSupportFragmentManager();
             supportFragmentManager.beginTransaction()
                     .add(R.id.step_details_container, stepDetailsFragment).commit();

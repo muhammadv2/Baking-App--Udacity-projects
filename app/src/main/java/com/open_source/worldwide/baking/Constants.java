@@ -26,4 +26,6 @@ public final class Constants {
     public static final String STEPS_PAGE_NAME = "Steps";
 
     public static final String DETAILS_FRAGMENT_PAGE_ID = "details_page";
+
+    public static final String VIDEO_URLS_KEY = "step_key";
 }

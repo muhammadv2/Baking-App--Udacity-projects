@@ -4,4 +4,6 @@
     <string name="error_loading_recipe">Error loading a recipe or more</string>
     <string name="main_recipe_image_desc">Main Recipe Image</string>
     <string name="steps">Steps</string>
+    <string name="previous_step">Previous Step</string>
+    <string name="next_step">Next Step</string>
 </resources>

@@ -1,7 +1,7 @@
 package com.open_source.worldwide.baking.models;
 
 
-public class Step {
+public final class Step {
 
     private Integer stepId;
     private String shortDescription;

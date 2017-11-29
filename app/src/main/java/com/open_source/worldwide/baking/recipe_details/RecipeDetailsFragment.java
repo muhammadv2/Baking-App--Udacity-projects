@@ -31,9 +31,7 @@ public class RecipeDetailsFragment extends Fragment implements StepsAdapter.OnIt
     @BindView(R.id.recipe_details_rv)
     RecyclerView recipeDetailsRv;
 
-
-    private StepsAdapter stepsAdapter;
-    private IngredientAdapter ingredientAdapter;
+    private ArrayList<String> videoUrls = new ArrayList<>();
 
     private int mRecipeId;
 
@@ -78,7 +76,6 @@ public class RecipeDetailsFragment extends Fragment implements StepsAdapter.OnIt
         Log.i(TAG, "onViewCreated: " + mRecipeId);
 
 
-
         if (page == 0) {
 
             handleIngredientsView(mRecipeId);
@@ -95,14 +92,17 @@ public class RecipeDetailsFragment extends Fragment implements StepsAdapter.OnIt
     private void handleIngredientsView(int recipeId) {
         ArrayList<Ingredient> ingredients = JsonUtils.getRecipeIngredients(getActivity(), recipeId);
 
-        ingredientAdapter = new IngredientAdapter(getActivity(), ingredients);
+        IngredientAdapter ingredientAdapter = new IngredientAdapter(getActivity(), ingredients);
         recipeDetailsRv.setAdapter(ingredientAdapter);
     }
 
     private void handleStepsView(int recipeId) {
         ArrayList<Step> steps = JsonUtils.getStepsFromJson(getActivity(), recipeId);
 
-        stepsAdapter = new StepsAdapter(getActivity(), steps, this);
+        for (int i = 0; i < steps.size(); i++) {
+            videoUrls.add(steps.get(i).getVideoURL());
+        }
+        StepsAdapter stepsAdapter = new StepsAdapter(getActivity(), steps, this);
         recipeDetailsRv.setAdapter(stepsAdapter);
     }
 
@@ -110,6 +110,7 @@ public class RecipeDetailsFragment extends Fragment implements StepsAdapter.OnIt
     public void onClick(int position) {
 
         Intent intent = new Intent(getActivity(), DetailsActivity.class);
+        intent.putExtra(Constants.VIDEO_URLS_KEY, position);
         startActivity(intent);
     }
 

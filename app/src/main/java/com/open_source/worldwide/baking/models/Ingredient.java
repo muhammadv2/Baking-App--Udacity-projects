@@ -1,6 +1,6 @@
 package com.open_source.worldwide.baking.models;
 
-public class Ingredient {
+public final class Ingredient {
 
     private int mQuantity;
     private String mMeasure;

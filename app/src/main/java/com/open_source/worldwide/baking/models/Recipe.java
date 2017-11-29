@@ -1,6 +1,6 @@
 package com.open_source.worldwide.baking.models;
 
-public class Recipe {
+public final class Recipe {
 
     private int mRecipeId;
     private String mName;
