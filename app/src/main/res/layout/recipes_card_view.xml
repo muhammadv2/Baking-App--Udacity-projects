@@ -16,7 +16,7 @@
     <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/main_recipe_iv"
@@ -24,27 +24,28 @@
             android:layout_height="@dimen/dp240_qu"
             android:layout_marginBottom="@dimen/dp8_qu"
             android:adjustViewBounds="true"
-            android:background="@drawable/nutella_1"
             android:contentDescription="@string/main_recipe_image_desc"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toTopOf="@+id/main_recipe_tv"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
 
         <TextView
             android:id="@+id/main_recipe_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:gravity="center"
-            android:padding="@dimen/dp16_qu"
-            android:textColor="@android:color/black"
+            android:padding="@dimen/dp8_qu"
+            android:textColor="@android:color/white"
+            android:background="#80000000"
             android:textSize="@dimen/sp20_qu"
-            android:textStyle="bold|italic"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>
