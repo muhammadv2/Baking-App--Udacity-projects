@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -61,7 +60,8 @@ public class MainScreenAdapter extends RecyclerView.Adapter<MainScreenAdapter.Ma
         Recipe recipe = mRecipes.get(position);
 
         if (recipe == null) return;
-        Picasso.with(mContext).load(R.drawable.hellobaking).into(holder.recipeImage);
+
+        setImageOnRecipes(position, holder.recipeImage);
 
         holder.recipeName.setText(recipe.getName());
 
@@ -69,6 +69,26 @@ public class MainScreenAdapter extends RecyclerView.Adapter<MainScreenAdapter.Ma
 
 
     }
+
+    private void setImageOnRecipes(int position, ImageView recipeImage) {
+
+        switch (position) {
+            case 0:
+                Picasso.with(mContext).load(R.drawable.nutella_1).into(recipeImage);
+                break;
+            case 1:
+                Picasso.with(mContext).load(R.drawable.choco_2).into(recipeImage);
+                break;
+            case 2:
+                Picasso.with(mContext).load(R.drawable.yellow_3).into(recipeImage);
+                break;
+            case 3:
+                Picasso.with(mContext).load(R.drawable.straw_4).into(recipeImage);
+                break;
+        }
+
+    }
+
 
     @Override
     public int getItemCount() {
@@ -83,8 +103,6 @@ public class MainScreenAdapter extends RecyclerView.Adapter<MainScreenAdapter.Ma
         @BindView(R.id.main_recipe_tv)
         TextView recipeName;
 
-        @BindView(R.id.main_recipe_like_btn)
-        Button recipeLikeButton;
 
         MainViewHolder(View itemView) {
             super(itemView);

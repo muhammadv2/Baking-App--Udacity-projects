@@ -45,8 +45,8 @@ public class StepDetailsFragment extends Fragment {
     @BindView(R.id.step_next_step)
     TextView nextStep;
 
-    private int stepId;
-    private int recipeId;
+    private int stepId = 0;
+    private int recipeId = 0;
 
 
     public StepDetailsFragment() {
@@ -68,9 +68,16 @@ public class StepDetailsFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        recipeId = getArguments().getInt(Constants.RECIPE_ID_KEY);
-        stepId = getArguments().getInt(Constants.STEP_ID_KEY);
+        if (getArguments() != null) {
+            recipeId = getArguments().getInt(Constants.RECIPE_ID_KEY);
+            stepId = getArguments().getInt(Constants.STEP_ID_KEY);
+        }
 
+        getStepDetailsAndSetTheContents();
+
+    }
+
+    private void getStepDetailsAndSetTheContents() {
         ArrayList<Step> steps = JsonUtils.getStepsFromJson(getActivity(), recipeId);
         Step step = steps.get(stepId);
 
@@ -93,7 +100,6 @@ public class StepDetailsFragment extends Fragment {
 
             }
         });
-
     }
 
     private void initializePlayer(Uri uri) {
@@ -126,6 +132,13 @@ public class StepDetailsFragment extends Fragment {
         exoPlayerView.hideController();
         exoPlayerView.setUseController(false);
         exoPlayerView.setPlayer(simpleExoPlayer);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (simpleExoPlayer != null)
+            simpleExoPlayer.stop();
     }
 
     private void releasePlayer() {

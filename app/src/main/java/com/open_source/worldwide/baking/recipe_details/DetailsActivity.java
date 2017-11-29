@@ -21,6 +21,7 @@ public class DetailsActivity extends AppCompatActivity {
     @BindView(R.id.view_pager)
     ViewPager mViewPager;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +30,7 @@ public class DetailsActivity extends AppCompatActivity {
         Intent receivedIntent = getIntent();
         ButterKnife.bind(this);
 
+
         if (receivedIntent.getAction() == (SHOW_DETAILS_ACTION)) {
 
             int recipeId = receivedIntent.getIntExtra(Constants.RECIPE_ID_KEY, -1);
@@ -36,6 +38,7 @@ public class DetailsActivity extends AppCompatActivity {
             RecipeDetailsPagerAdapter adapter =
                     new RecipeDetailsPagerAdapter(getSupportFragmentManager(), recipeId);
             mViewPager.setAdapter(adapter);
+
 
         } else {
 
@@ -53,10 +56,11 @@ public class DetailsActivity extends AppCompatActivity {
             stepDetailsFragment.setArguments(bundle);
 
             FragmentManager supportFragmentManager = getSupportFragmentManager();
-            supportFragmentManager.beginTransaction()
-                    .add(R.id.step_details_container, stepDetailsFragment).commit();
+            if (savedInstanceState == null) {
+                supportFragmentManager.beginTransaction()
+                        .add(R.id.step_details_container, stepDetailsFragment).commit();
+            }
         }
 
     }
-
 }

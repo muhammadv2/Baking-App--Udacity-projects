@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="qu_of_16dp">16dp</dimen>
+    <dimen name="dp16_qu">16dp</dimen>
     <dimen name="dp4_qu">4dp</dimen>
     <dimen name="sp14_qu">14sp</dimen>
     <dimen name="dp32_qu">32dp</dimen>
+    <dimen name="dp400_qu">400dp</dimen>
+    <dimen name="dp1_qu">1dp</dimen>
+    <dimen name="dp2_qu">2dp</dimen>
+    <dimen name="dp8_qu">8dp</dimen>
     <dimen name="dp240_qu">240dp</dimen>
+    <dimen name="sp20_qu">20sp</dimen>
 </resources>

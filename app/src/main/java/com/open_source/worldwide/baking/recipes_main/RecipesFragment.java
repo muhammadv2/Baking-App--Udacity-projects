@@ -1,6 +1,7 @@
 package com.open_source.worldwide.baking.recipes_main;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -55,7 +56,12 @@ public class RecipesFragment extends Fragment implements MainScreenAdapter.OnIte
         mRecyclerView.setAdapter(mAdapter);
 
         if (getResources().getBoolean(R.bool.isTablet)) {
-            mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+            if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+                mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+            }else{
+                mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+
+            }
         } else {
             mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         }

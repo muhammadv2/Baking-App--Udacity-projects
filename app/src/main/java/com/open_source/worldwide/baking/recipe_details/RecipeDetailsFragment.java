@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +39,6 @@ public class RecipeDetailsFragment extends Fragment implements StepsAdapter.OnIt
         // Required empty public constructor
     }
 
-    // Store instance variables
     private int page;
 
     // newInstance constructor for creating fragment with arguments
@@ -85,7 +83,6 @@ public class RecipeDetailsFragment extends Fragment implements StepsAdapter.OnIt
         recipeDetailsRv.setHasFixedSize(true);
 
 
-        Log.i(TAG, "onViewCreated: else is invoked");
         recipeDetailsRv.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 

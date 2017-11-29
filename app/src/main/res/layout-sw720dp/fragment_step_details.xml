@@ -14,7 +14,7 @@
         <com.google.android.exoplayer2.ui.SimpleExoPlayerView
             android:id="@+id/simple_exoplayer_view"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp240_qu"
+            android:layout_height="380dp"
             app:controller_layout_id="@layout/exo_player_controller_ui" />
 
         <TextView
@@ -41,12 +41,13 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/textview_background"
-                android:elevation="2dp"
+                android:elevation="@dimen/dp2_qu"
                 android:gravity="center"
-                android:padding="16dp"
+                android:padding="@dimen/dp16_qu"
                 android:text="@string/previous_step"
                 android:textColor="@android:color/black"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:ignore="UnusedAttribute" />
 
             <View
                 android:layout_width="1dp"
@@ -60,12 +61,13 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/textview_background"
-                android:elevation="2dp"
+                android:elevation="@dimen/dp2_qu"
                 android:gravity="center"
-                android:padding="16dp"
+                android:padding="@dimen/dp16_qu"
                 android:text="@string/next_step"
                 android:textColor="@android:color/black"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:targetApi="lollipop" />
 
         </LinearLayout>
 
