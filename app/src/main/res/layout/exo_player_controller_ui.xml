@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:paddingTop="4dp"
+        android:paddingTop="@dimen/dp4_qu"
         android:orientation="horizontal">
 
         <ImageButton android:id="@id/exo_prev"
@@ -29,34 +29,34 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="@dimen/dp4_qu"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <TextView android:id="@id/exo_position"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
+            android:textSize="@dimen/sp14_qu"
             android:textStyle="bold"
-            android:paddingLeft="4dp"
-            android:paddingRight="4dp"
+            android:paddingLeft="@dimen/dp4_qu"
+            android:paddingRight="@dimen/dp4_qu"
             android:includeFontPadding="false"
             android:textColor="#FFBEBEBE"/>
 
         <SeekBar android:id="@id/exo_progress"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="32dp"
+            android:layout_height="@dimen/dp32_qu"
             android:focusable="false"
             style="?android:attr/progressBarStyleHorizontal"/>
 
         <TextView android:id="@id/exo_duration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
+            android:textSize="@dimen/sp14_qu"
             android:textStyle="bold"
-            android:paddingLeft="4dp"
-            android:paddingRight="4dp"
+            android:paddingLeft="@dimen/dp4_qu"
+            android:paddingRight="@dimen/dp4_qu"
             android:includeFontPadding="false"
             android:textColor="#FFBEBEBE"/>
 

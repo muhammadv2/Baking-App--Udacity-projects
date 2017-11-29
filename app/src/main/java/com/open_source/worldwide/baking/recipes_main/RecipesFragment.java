@@ -1,8 +1,6 @@
 package com.open_source.worldwide.baking.recipes_main;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -24,25 +22,15 @@ import butterknife.ButterKnife;
 
 public class RecipesFragment extends Fragment implements MainScreenAdapter.OnItemClickListener {
 
-    private static final String TAG = RecipesFragment.class.toString();
-
     @BindView(R.id.recipes_rv)
     RecyclerView mRecyclerView;
 
     MainScreenAdapter mAdapter;
 
-    public static boolean isTablet(Context context) {
-        return (context.getResources().getConfiguration().screenLayout
-                & Configuration.SCREENLAYOUT_SIZE_MASK)
-                >= Configuration.SCREENLAYOUT_SIZE_LARGE;
-    }
-
-
 
     public RecipesFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -66,7 +54,7 @@ public class RecipesFragment extends Fragment implements MainScreenAdapter.OnIte
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(mAdapter);
 
-        if (isTablet(getActivity())) {
+        if (getResources().getBoolean(R.bool.isTablet)) {
             mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         } else {
             mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -82,7 +70,5 @@ public class RecipesFragment extends Fragment implements MainScreenAdapter.OnIte
         startActivity(intent);
 
     }
-
-
 
 }

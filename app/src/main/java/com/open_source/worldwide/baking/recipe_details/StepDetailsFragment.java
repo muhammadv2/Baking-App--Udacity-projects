@@ -68,8 +68,6 @@ public class StepDetailsFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
-
         recipeId = getArguments().getInt(Constants.RECIPE_ID_KEY);
         stepId = getArguments().getInt(Constants.STEP_ID_KEY);
 
@@ -87,7 +85,6 @@ public class StepDetailsFragment extends Fragment {
             setDefaultImageIfNoVideo();
         }
 
-
         detailsDescription.setText(step.getDescription());
 
         previousStep.setOnClickListener(new View.OnClickListener() {
@@ -98,7 +95,6 @@ public class StepDetailsFragment extends Fragment {
         });
 
     }
-
 
     private void initializePlayer(Uri uri) {
 
