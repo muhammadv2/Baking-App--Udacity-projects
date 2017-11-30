@@ -15,7 +15,6 @@
         android:layout_width="@dimen/dp34_qu"
         android:layout_height="@dimen/dp34_qu"
         android:layout_gravity="center"
-        android:background="@drawable/chef"
         tools:ignore="ContentDescription" />
 
     <TextView

@@ -1,5 +1,7 @@
 package com.open_source.worldwide.baking.models;
 
+import com.open_source.worldwide.baking.R;
+
 public final class Ingredient {
 
     private int mQuantity;
@@ -25,5 +27,22 @@ public final class Ingredient {
         return mIngredient;
     }
 
+    public static int setCorrectImage(String key) {
 
+        switch (key) {
+            case "CUP":
+                return R.drawable.cup_ing;
+            case "TBLSP":
+                return R.drawable.spoon_ingr;
+            case "TSP":
+                return R.drawable.spoon_ingr;
+            case "K":
+                return R.drawable.kg_ing;
+            case "G":
+                return R.drawable.gram_ing;
+            default:
+                return R.drawable.default_ingr;
+
+        }
+    }
 }
