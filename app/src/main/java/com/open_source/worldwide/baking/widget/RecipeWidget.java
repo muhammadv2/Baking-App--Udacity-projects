@@ -24,16 +24,12 @@ public class RecipeWidget extends AppWidgetProvider {
         Intent intent = new Intent(context, WidgetServices.class);
 
         // Set up the RemoteViews object to use a RemoteViews adapter.
-        // This adapter connects
-        // to a RemoteViewsService  through the specified intent.
+        // This adapter connects to a RemoteViewsService through the specified intent.
         // This is how you populate the data.
         views.setRemoteAdapter(R.id.recipes_widget, intent);
 
-        views.setImageViewResource(R.id.main_recipe_iv_widget,R.drawable.nutella_1);
-
 
         Intent startActivityIntent = new Intent(context, DetailsActivity.class);
-
         PendingIntent startActivityPendingIntent =
                 PendingIntent.getActivity(context,
                         0,

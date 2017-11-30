@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 
 import com.open_source.worldwide.baking.Constants;
@@ -30,8 +31,13 @@ public class DetailsActivity extends AppCompatActivity {
         final Intent receivedIntent = getIntent();
         ButterKnife.bind(this);
 
+        String title = receivedIntent.getStringExtra(Constants.RECIPE_NAME);
+
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setTitle(title);
 
         if (receivedIntent.getAction() == (SHOW_DETAILS_ACTION)) {
+            Log.i(SHOW_DETAILS_ACTION, "onCreate: if invoked");
 
             int recipeId = receivedIntent.getIntExtra(Constants.RECIPE_ID_KEY, -1);
 
@@ -66,6 +72,7 @@ public class DetailsActivity extends AppCompatActivity {
         } else {
 
             mViewPager.setVisibility(View.GONE);
+            Log.i(SHOW_DETAILS_ACTION, "onCreate: else invoked");
 
             StepDetailsFragment stepDetailsFragment = new StepDetailsFragment();
 

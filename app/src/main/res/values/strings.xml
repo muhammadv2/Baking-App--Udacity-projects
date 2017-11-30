@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Baking</string>
+    <string name="app_name">Yummy</string>
 
     <string name="error_loading_recipe">Error loading a recipe or more</string>
     <string name="main_recipe_image_desc">Main Recipe Image</string>

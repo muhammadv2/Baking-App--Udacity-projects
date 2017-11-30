@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
+import com.open_source.worldwide.baking.Constants;
 import com.open_source.worldwide.baking.JsonUtils;
 import com.open_source.worldwide.baking.R;
 import com.open_source.worldwide.baking.models.Recipe;
+import com.open_source.worldwide.baking.recipe_details.DetailsActivity;
 
 import java.util.ArrayList;
 
@@ -53,15 +55,9 @@ public class WidgetServices extends RemoteViewsService {
         @Override
         public RemoteViews getViewAt(int position) {
 
-            // position will always range from 0 to getCount() - 1.
-
             // Construct a RemoteViews item based on the app widget item XML file, and set the
-
-            // text based on the position.
-
+            // text and image on the position.
             RemoteViews rv = new RemoteViews(mContext.getPackageName(), R.layout.widget_card_view);
-
-            // feed row
 
             ArrayList<Recipe> recipes = JsonUtils.getRecipesFromJson(mContext);
             Recipe recipe = recipes.get(position);
@@ -74,30 +70,22 @@ public class WidgetServices extends RemoteViewsService {
             rv.setTextViewText(R.id.main_recipe_tv_widget, recipeName);
             rv.setImageViewResource(R.id.main_recipe_iv_widget,images[position]);
 
-            // end feed row
 
             // Next, set a fill-intent, which will be used to fill in the pending intent template
+            // that is set on the collection view
 
-            // that is set on the collection view in ListViewWidgetProvider.
-
-//            Bundle extras = new Bundle();
-//
-//            extras.putInt(AppWidgetProvider.EXTRA_ITEM, position);
-//
-//            Intent fillInIntent = new Intent();
-//
-//            fillInIntent.putExtra("homescreen_meeting", data);
-//
-//            fillInIntent.putExtras(extras);
+            Intent fillInIntent = new Intent();
+            fillInIntent.putExtra(Constants.RECIPE_ID_KEY, position);
+            fillInIntent.setAction(DetailsActivity.SHOW_DETAILS_ACTION);
+            fillInIntent.putExtra(Constants.RECIPE_NAME, recipeName);
 
             // Make it possible to distinguish the individual on-click
 
             // action of a given item
 
-//            rv.setOnClickFillInIntent(R.id.widget_container, fillInIntent);
+            rv.setOnClickFillInIntent(R.id.widget_container, fillInIntent);
 
             // Return the RemoteViews object.
-
             return rv;
         }
 

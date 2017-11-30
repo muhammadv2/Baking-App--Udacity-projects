@@ -6,10 +6,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.open_source.worldwide.baking.Adapters.IngredientAdapter;
 import com.open_source.worldwide.baking.Adapters.StepsAdapter;
 import com.open_source.worldwide.baking.Constants;
@@ -30,7 +30,6 @@ public class RecipeDetailsFragment extends Fragment implements StepsAdapter.OnIt
     @BindView(R.id.recipe_details_rv)
     RecyclerView recipeDetailsRv;
 
-    private ArrayList<String> videoUrls = new ArrayList<>();
 
     private int mRecipeId;
 
@@ -39,6 +38,7 @@ public class RecipeDetailsFragment extends Fragment implements StepsAdapter.OnIt
         // Required empty public constructor
     }
 
+    // Store instance variables
     private int page;
 
     // newInstance constructor for creating fragment with arguments
@@ -55,8 +55,6 @@ public class RecipeDetailsFragment extends Fragment implements StepsAdapter.OnIt
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        setRetainInstance(true);
 
         View view = inflater.inflate(R.layout.fragment_recipe_details, container, false);
 
@@ -83,6 +81,7 @@ public class RecipeDetailsFragment extends Fragment implements StepsAdapter.OnIt
         recipeDetailsRv.setHasFixedSize(true);
 
 
+        Log.i(TAG, "onViewCreated: else is invoked");
         recipeDetailsRv.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
@@ -97,9 +96,6 @@ public class RecipeDetailsFragment extends Fragment implements StepsAdapter.OnIt
     private void handleStepsView(int recipeId) {
         ArrayList<Step> steps = JsonUtils.getStepsFromJson(getActivity(), recipeId);
 
-        for (int i = 0; i < steps.size(); i++) {
-            videoUrls.add(steps.get(i).getVideoURL());
-        }
         StepsAdapter stepsAdapter = new StepsAdapter(getActivity(), steps, this);
         recipeDetailsRv.setAdapter(stepsAdapter);
     }
