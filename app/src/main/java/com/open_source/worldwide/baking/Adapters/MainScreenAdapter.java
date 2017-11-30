@@ -2,7 +2,6 @@ package com.open_source.worldwide.baking.Adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,12 +62,13 @@ public class MainScreenAdapter extends RecyclerView.Adapter<MainScreenAdapter.Ma
 
         setImageOnRecipes(position, holder.recipeImage);
 
+        String servings = " Servings " + recipe.getServings();
+
         holder.recipeName.setText(recipe.getName());
-
-        Log.i(TAG, "onBindViewHolder: " + recipe.getImage());
-
+        holder.recipeServing.setText(servings);
 
     }
+
 
     private void setImageOnRecipes(int position, ImageView recipeImage) {
 
@@ -102,6 +102,9 @@ public class MainScreenAdapter extends RecyclerView.Adapter<MainScreenAdapter.Ma
 
         @BindView(R.id.main_recipe_tv)
         TextView recipeName;
+
+        @BindView(R.id.recipe_serving_tv)
+        TextView recipeServing;
 
 
         MainViewHolder(View itemView) {
