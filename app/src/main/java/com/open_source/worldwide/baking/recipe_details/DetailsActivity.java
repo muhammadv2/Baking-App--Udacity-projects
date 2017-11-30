@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
+import com.open_source.worldwide.baking.Adapters.RecipeDetailsPagerAdapter;
 import com.open_source.worldwide.baking.Constants;
 import com.open_source.worldwide.baking.R;
 

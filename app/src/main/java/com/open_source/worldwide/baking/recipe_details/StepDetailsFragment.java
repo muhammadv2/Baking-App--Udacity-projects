@@ -68,6 +68,7 @@ public class StepDetailsFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //update the value of recipeId and stepId with the passed values from the constructor
         if (getArguments() != null) {
             recipeId = getArguments().getInt(Constants.RECIPE_ID_KEY);
             stepId = getArguments().getInt(Constants.STEP_ID_KEY);
@@ -78,12 +79,16 @@ public class StepDetailsFragment extends Fragment {
     }
 
     private void getStepDetailsAndSetTheContents() {
+        //get all the steps objects from the json associated with it
         final ArrayList<Step> steps = JsonUtils.getStepsFromJson(getActivity(), recipeId);
-        Step step = steps.get(stepId);
+        Step step = steps.get(stepId); // get the correct step with the help of passed stepId
 
+        //extract the video url that could be saved in different keys
         String stepVideo = step.getVideoURL();
         String stepThumbnail = step.getThumbnailURL();
 
+        //because that url maybe saved in different keys check each string and use the one populated
+        //to set the correct video using the help of ExoPlayer library
         if (!stepVideo.equals("")) {
             initializePlayer(Uri.parse(stepVideo));
         } else if (!stepThumbnail.equals("")) {
@@ -92,6 +97,7 @@ public class StepDetailsFragment extends Fragment {
             setDefaultImageIfNoVideo();
         }
 
+        //setting the previous button
         detailsDescription.setText(step.getDescription());
 
         previousStep.setOnClickListener(new View.OnClickListener() {
@@ -106,6 +112,7 @@ public class StepDetailsFragment extends Fragment {
             }
         });
 
+        //setting the next button
         nextStep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,6 +125,11 @@ public class StepDetailsFragment extends Fragment {
         });
     }
 
+    /**
+     * method that initialize exoPlayer and and set it on ExoPlayerView nad use media source built
+     *
+     * @param uri from the passed uri to prepare ExoPlayer
+     */
     private void initializePlayer(Uri uri) {
 
         simpleExoPlayer = ExoPlayerFactory.newSimpleInstance(
@@ -132,12 +144,18 @@ public class StepDetailsFragment extends Fragment {
         simpleExoPlayer.prepare(mediaSource, true, false);
     }
 
+    /**
+     * use the default of the needed classes to construct MediaSource
+     */
     private MediaSource buildMediaSource(Uri uri) {
         return new ExtractorMediaSource(uri,
                 new DefaultHttpDataSourceFactory("Baking"),
                 new DefaultExtractorsFactory(), null, null);
     }
 
+    /**
+     * method help set a default art work if there's no video at all associated with the step
+     */
     private void setDefaultImageIfNoVideo() {
         exoPlayerView.setDefaultArtwork(BitmapFactory.decodeResource
                 (getResources(), R.drawable.stew));

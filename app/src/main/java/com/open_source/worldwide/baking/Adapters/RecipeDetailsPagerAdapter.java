@@ -1,10 +1,11 @@
-package com.open_source.worldwide.baking.recipe_details;
+package com.open_source.worldwide.baking.Adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.open_source.worldwide.baking.Constants;
+import com.open_source.worldwide.baking.recipe_details.RecipeDetailsFragment;
 
 
 public class RecipeDetailsPagerAdapter extends FragmentPagerAdapter {

@@ -11,8 +11,8 @@
 
     <ImageView
         android:id="@+id/step_iv"
-        android:layout_width="34dp"
-        android:layout_height="34dp"
+        android:layout_width="@dimen/dp34_qu"
+        android:layout_height="@dimen/dp34_qu"
         android:layout_gravity="center"
         android:background="@drawable/chef"
         tools:ignore="ContentDescription" />
@@ -24,8 +24,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:padding="8dp"
-        android:textSize="18sp"
+        android:padding="@dimen/dp8_qu"
+        android:textSize="@dimen/sp20_qu"
          />
 
 </LinearLayout>

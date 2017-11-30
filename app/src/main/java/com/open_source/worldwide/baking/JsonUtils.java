@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 public class JsonUtils {
 
+    //extract all the recipes from json file
     public static ArrayList<Recipe> getRecipesFromJson(Context context) {
 
         Integer id;
@@ -49,6 +50,7 @@ public class JsonUtils {
 
     }
 
+    //extract all ingredient from json file
     public static ArrayList<Ingredient> getRecipeIngredients(Context context, int recipeId) {
 
         int quantity;
@@ -82,7 +84,7 @@ public class JsonUtils {
 
     }
 
-
+    //extract all steps from json
     public static ArrayList<Step> getStepsFromJson(Context context, int recipeId) {
 
         int id;
@@ -119,6 +121,7 @@ public class JsonUtils {
 
     }
 
+    //method opens the json and read it turning it into string
     @Nullable
     private static String loadJSONFromAsset(Context context) {
 
