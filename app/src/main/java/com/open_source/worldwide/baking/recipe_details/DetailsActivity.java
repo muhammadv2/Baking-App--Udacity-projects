@@ -23,11 +23,11 @@ public class DetailsActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
 
-        Intent receivedIntent = getIntent();
+        final Intent receivedIntent = getIntent();
         ButterKnife.bind(this);
 
 
@@ -38,6 +38,29 @@ public class DetailsActivity extends AppCompatActivity {
             RecipeDetailsPagerAdapter adapter =
                     new RecipeDetailsPagerAdapter(getSupportFragmentManager(), recipeId);
             mViewPager.setAdapter(adapter);
+
+//            if (getResources().getBoolean(R.bool.isTablet)) {
+//
+//                mViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+//                    @Override
+//                    public void onPageSelected(int position) {
+//
+//                        if (position == 1) {
+//                            StepDetailsFragment stepDetailsFragment = new StepDetailsFragment();
+//
+//
+//                            Bundle bundle = new Bundle();
+//                            bundle.putInt(Constants.STEP_ID_KEY,
+//                                    receivedIntent.getIntExtra(Constants.STEP_ID_KEY, 0));
+//                            bundle.putInt(Constants.RECIPE_ID_KEY,
+//                                    receivedIntent.getIntExtra(Constants.RECIPE_ID_KEY, 0));
+//
+//                            stepDetailsFragment.setArguments(bundle);
+//
+//                        }
+//                    }
+//                });
+//            }
 
 
         } else {

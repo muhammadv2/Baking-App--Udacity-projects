@@ -1,9 +1,14 @@
-package com.open_source.worldwide.baking;
+package com.open_source.worldwide.baking.widget;
 
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
+import android.content.Intent;
 import android.widget.RemoteViews;
+
+import com.open_source.worldwide.baking.R;
+import com.open_source.worldwide.baking.recipe_details.DetailsActivity;
 
 /**
  * Implementation of App Widget functionality.
@@ -13,10 +18,30 @@ public class RecipeWidget extends AppWidgetProvider {
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
 
-        CharSequence widgetText = context.getString(R.string.appwidget_text);
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.recipe_widget);
-        views.setTextViewText(R.id.appwidget_text, widgetText);
+
+        Intent intent = new Intent(context, WidgetServices.class);
+
+        // Set up the RemoteViews object to use a RemoteViews adapter.
+        // This adapter connects
+        // to a RemoteViewsService  through the specified intent.
+        // This is how you populate the data.
+        views.setRemoteAdapter(R.id.recipes_widget, intent);
+
+        views.setImageViewResource(R.id.main_recipe_iv_widget,R.drawable.nutella_1);
+
+
+        Intent startActivityIntent = new Intent(context, DetailsActivity.class);
+
+        PendingIntent startActivityPendingIntent =
+                PendingIntent.getActivity(context,
+                        0,
+                        startActivityIntent,
+                        PendingIntent.FLAG_UPDATE_CURRENT);
+
+        views.setPendingIntentTemplate(R.id.recipes_widget, startActivityPendingIntent);
+
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);

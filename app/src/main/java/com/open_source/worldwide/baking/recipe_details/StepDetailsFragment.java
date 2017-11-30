@@ -78,7 +78,7 @@ public class StepDetailsFragment extends Fragment {
     }
 
     private void getStepDetailsAndSetTheContents() {
-        ArrayList<Step> steps = JsonUtils.getStepsFromJson(getActivity(), recipeId);
+        final ArrayList<Step> steps = JsonUtils.getStepsFromJson(getActivity(), recipeId);
         Step step = steps.get(stepId);
 
         String stepVideo = step.getVideoURL();
@@ -97,6 +97,22 @@ public class StepDetailsFragment extends Fragment {
         previousStep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if (stepId > 0)
+                    --stepId;
+
+                getStepDetailsAndSetTheContents();
+
+            }
+        });
+
+        nextStep.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (stepId < steps.size() - 1)
+                    ++stepId;
+
+                getStepDetailsAndSetTheContents();
 
             }
         });
