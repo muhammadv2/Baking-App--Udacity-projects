@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    tools:context="com.open_source.worldwide.baking.recipe_details.RecipeDetailsFragment">
+
+    <LinearLayout
+        android:layout_width="@dimen/dp400_qu"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <android.support.v4.view.ViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v4.view.PagerTabStrip
+                android:id="@+id/pager_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:background="@color/view_pager_tab_background"
+                android:paddingBottom="@dimen/dp16_qu"
+                android:paddingEnd="@dimen/dp16_qu"
+                android:paddingStart="@dimen/dp16_qu"
+                android:paddingTop="@dimen/dp4_qu"
+                android:textAppearance="@style/PagerTabStripText"
+                android:textColor="@android:color/black" />
+        </android.support.v4.view.ViewPager>
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/step_details_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+</LinearLayout>

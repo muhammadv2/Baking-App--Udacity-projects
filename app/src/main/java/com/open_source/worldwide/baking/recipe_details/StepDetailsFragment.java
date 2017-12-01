@@ -45,9 +45,10 @@ public class StepDetailsFragment extends Fragment {
     @BindView(R.id.step_next_step)
     TextView nextStep;
 
-    private int stepId = 0;
-    private int recipeId = 0;
 
+
+    private int mStepId = 0;
+    private int mRecipeId = 0;
 
     public StepDetailsFragment() {
         // Required empty public constructor
@@ -61,6 +62,7 @@ public class StepDetailsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_step_details, container, false);
         ButterKnife.bind(this, view);
 
+
         return view;
     }
 
@@ -68,10 +70,10 @@ public class StepDetailsFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //update the value of recipeId and stepId with the passed values from the constructor
+        //update the value of mRecipeId and mStepId with the passed values from the constructor
         if (getArguments() != null) {
-            recipeId = getArguments().getInt(Constants.RECIPE_ID_KEY);
-            stepId = getArguments().getInt(Constants.STEP_ID_KEY);
+            mRecipeId = getArguments().getInt(Constants.RECIPE_ID_KEY);
+            mStepId = getArguments().getInt(Constants.STEP_ID_KEY);
         }
 
         getStepDetailsAndSetTheContents();
@@ -80,8 +82,8 @@ public class StepDetailsFragment extends Fragment {
 
     private void getStepDetailsAndSetTheContents() {
         //get all the steps objects from the json associated with it
-        final ArrayList<Step> steps = JsonUtils.getStepsFromJson(getActivity(), recipeId);
-        Step step = steps.get(stepId); // get the correct step with the help of passed stepId
+        final ArrayList<Step> steps = JsonUtils.getStepsFromJson(getActivity(), mRecipeId);
+        Step step = steps.get(mStepId); // get the correct step with the help of passed mStepId
 
         //extract the video url that could be saved in different keys
         String stepVideo = step.getVideoURL();
@@ -104,8 +106,8 @@ public class StepDetailsFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                if (stepId > 0)
-                    --stepId;
+                if (mStepId > 0)
+                    --mStepId;
 
                 getStepDetailsAndSetTheContents();
 
@@ -116,8 +118,8 @@ public class StepDetailsFragment extends Fragment {
         nextStep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (stepId < steps.size() - 1)
-                    ++stepId;
+                if (mStepId < steps.size() - 1)
+                    ++mStepId;
 
                 getStepDetailsAndSetTheContents();
 
@@ -171,8 +173,7 @@ public class StepDetailsFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        if (simpleExoPlayer != null)
-            simpleExoPlayer.stop();
+        releasePlayer();
     }
 
     private void releasePlayer() {
@@ -183,9 +184,5 @@ public class StepDetailsFragment extends Fragment {
         }
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        releasePlayer();
-    }
+
 }
