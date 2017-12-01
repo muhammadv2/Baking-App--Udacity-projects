@@ -25,7 +25,7 @@ public class WidgetServices extends RemoteViewsService {
 
     private class WidgeRemoteViewsFactory implements RemoteViewsFactory {
 
-        Context mContext;
+        final Context mContext;
 
         public WidgeRemoteViewsFactory(Context applicationContext) {
 

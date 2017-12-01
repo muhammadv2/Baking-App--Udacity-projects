@@ -20,8 +20,8 @@ import butterknife.ButterKnife;
 
 public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.IngredientViewHolder> {
 
-    Context mContext;
-    ArrayList<Ingredient> mIngredients;
+    private final Context mContext;
+    private final ArrayList<Ingredient> mIngredients;
 
     public IngredientAdapter(Context context, ArrayList<Ingredient> ingredients) {
 

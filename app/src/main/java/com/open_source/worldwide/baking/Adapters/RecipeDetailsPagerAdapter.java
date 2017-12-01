@@ -10,7 +10,7 @@ import com.open_source.worldwide.baking.recipe_details.RecipeDetailsFragment;
 
 public class RecipeDetailsPagerAdapter extends FragmentPagerAdapter {
 
-    private static int NUM_ITEMS = 2;
+    private static final int NUM_ITEMS = 2;
 
     private static int mRecipeId;
 

@@ -4,9 +4,9 @@ import com.open_source.worldwide.baking.R;
 
 public final class Ingredient {
 
-    private int mQuantity;
-    private String mMeasure;
-    private String mIngredient;
+    private final int mQuantity;
+    private final String mMeasure;
+    private final String mIngredient;
 
     public Ingredient(int quantity, String measure, String ingredient) {
 

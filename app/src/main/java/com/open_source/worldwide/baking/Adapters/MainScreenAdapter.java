@@ -21,9 +21,9 @@ import butterknife.ButterKnife;
 public class MainScreenAdapter extends RecyclerView.Adapter<MainScreenAdapter.MainViewHolder> {
 
     //fields to be set to the passed data coming from associated activity
-    private Context mContext;
+    private final Context mContext;
     private final OnItemClickListener mItemClickListener;
-    private ArrayList<Recipe> mRecipes;
+    private final ArrayList<Recipe> mRecipes;
 
     /**
      * Constructor that takes arguments helps set up the adapter

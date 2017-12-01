@@ -59,7 +59,8 @@ public class DetailsActivity extends AppCompatActivity {
             //set the adapter on the view pager
             mViewPager.setAdapter(adapter);
 
-            Log.i("DetailsActivity", "onCreate: if invoked");
+            //listen to the page selected on view pager if steps page show the content of the step
+            //if not hide it
             mViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
                 @Override
                 public void onPageSelected(int position) {
@@ -75,11 +76,13 @@ public class DetailsActivity extends AppCompatActivity {
             });
         } else {
 
+            //check if the intent has the action of show details action
             if (receivedIntent.getAction() == SHOW_DETAILS_ACTION) {
                 //set the adapter on the view pager
                 mViewPager.setAdapter(adapter);
 
             } else {
+                //if not set the visibility view pager to gone and show the details fragment
                 mViewPager.setVisibility(View.GONE);
                 Log.i("DetailsActivity", "onCreate: ");
                 showStepDetailsFragment(savedInstanceState, receivedIntent);

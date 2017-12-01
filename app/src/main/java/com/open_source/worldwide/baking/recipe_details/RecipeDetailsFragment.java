@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -96,7 +95,6 @@ public class RecipeDetailsFragment extends Fragment implements StepsAdapter.OnIt
     @Override
     public void onClick(int position) {
 
-        Log.i("DetailsActivity", "onClick: " + isTabletAndLandOrientation());
         //checks if its tablet and in landscape if not just send a normal intent to open the details
         //activity again with the step position and if its replace the fragments shows the content
         //to be be populated with the new content dynamically

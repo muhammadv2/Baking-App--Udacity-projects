@@ -34,7 +34,7 @@ public class StepDetailsFragment extends Fragment {
     @BindView(R.id.simple_exoplayer_view)
     SimpleExoPlayerView exoPlayerView;
 
-    SimpleExoPlayer simpleExoPlayer;
+    private SimpleExoPlayer simpleExoPlayer;
 
     @BindView(R.id.step_details_description_tv)
     TextView detailsDescription;

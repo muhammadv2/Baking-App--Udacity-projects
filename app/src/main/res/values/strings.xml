@@ -3,15 +3,11 @@
 
     <string name="error_loading_recipe">Error loading a recipe or more</string>
     <string name="main_recipe_image_desc">Main Recipe Image</string>
-    <string name="steps">Steps</string>
     <string name="previous_step">Previous Step</string>
     <string name="next_step">Next Step</string>
 
     <bool name="isTablet">false</bool>
-    <string name="appwidget_text">EXAMPLE</string>
-    <string name="add_widget">Add widget</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

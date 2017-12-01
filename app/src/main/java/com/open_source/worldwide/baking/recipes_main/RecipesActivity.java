@@ -26,7 +26,7 @@ public class RecipesActivity extends AppCompatActivity
     @BindView(R.id.recipes_rv)
     RecyclerView mRecyclerView;
 
-    MainScreenAdapter mAdapter;
+    private MainScreenAdapter mAdapter;
 
     private ArrayList<Recipe> recipes;
 

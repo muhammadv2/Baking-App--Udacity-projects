@@ -19,13 +19,11 @@ import butterknife.ButterKnife;
 
 public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHolder> {
 
-    Context mContext;
-    ArrayList<Step> mSteps;
-    OnItemClickListener mItemclickListener;
+    private final ArrayList<Step> mSteps;
+    private final OnItemClickListener mItemclickListener;
 
     public StepsAdapter(Context context, ArrayList<Step> steps, OnItemClickListener itemClickListener) {
 
-        mContext = context;
         mSteps = steps;
         mItemclickListener = itemClickListener;
     }
