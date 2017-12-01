@@ -20,39 +20,46 @@ import butterknife.ButterKnife;
 
 public class DetailsActivity extends AppCompatActivity {
 
+    //Action to distinguish between intents coming from RecipesFragment and RecipesDetailsFragment
     public static final String SHOW_DETAILS_ACTION = "details";
 
     @BindView(R.id.view_pager)
     ViewPager mViewPager;
-
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
 
+        //save a reference of the coming intent
         final Intent receivedIntent = getIntent();
+
+        //binding butterKnife
         ButterKnife.bind(this);
 
+        //getting the recipe name from the intent to set it on the ActionBar
         String title = receivedIntent.getStringExtra(Constants.RECIPE_NAME);
-
         if (getSupportActionBar() != null)
             getSupportActionBar().setTitle(title);
 
+        //get the recipeId key
         int recipeId = receivedIntent.getIntExtra(Constants.RECIPE_ID_KEY, -1);
 
-
+        //get a reference of the RecipeDetailsPagerAdapter passing the recipe id to help the adapter
+        //set the right content over the views
         final RecipeDetailsPagerAdapter adapter =
                 new RecipeDetailsPagerAdapter(getSupportFragmentManager(), recipeId);
 
 
-        mViewPager.setAdapter(adapter);
-
-
+        //getting a reference of FrameLayout that will hold the fragment
         final FrameLayout frameLayout = findViewById(R.id.step_details_container);
 
+        //check if the device is a tablet and in landscape mode
+        if (isTabletAndLandOrientation()) {
+            //set the adapter on the view pager
+            mViewPager.setAdapter(adapter);
 
-        if (receivedIntent.getAction() == (SHOW_DETAILS_ACTION) && isTabletAndLandOrientation()) {
+            Log.i("DetailsActivity", "onCreate: if invoked");
             mViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
                 @Override
                 public void onPageSelected(int position) {
@@ -60,10 +67,6 @@ public class DetailsActivity extends AppCompatActivity {
                     if (position == 1) {
                         if (isTabletAndLandOrientation()) {
                             frameLayout.setVisibility(View.VISIBLE);
-                            Log.i("DetailsActivity", "onCreate: " + position);
-
-                            showStepDetailsFragment(savedInstanceState, receivedIntent);
-
                         }
                     } else {
                         frameLayout.setVisibility(View.GONE);
@@ -72,13 +75,22 @@ public class DetailsActivity extends AppCompatActivity {
             });
         } else {
 
-            if (!getResources().getBoolean(R.bool.isTablet))
-                mViewPager.setVisibility(View.GONE);
-            showStepDetailsFragment(savedInstanceState, receivedIntent);
-        }
+            if (receivedIntent.getAction() == SHOW_DETAILS_ACTION) {
+                //set the adapter on the view pager
+                mViewPager.setAdapter(adapter);
 
+            } else {
+                mViewPager.setVisibility(View.GONE);
+                Log.i("DetailsActivity", "onCreate: ");
+                showStepDetailsFragment(savedInstanceState, receivedIntent);
+            }
+        }
     }
 
+    /**
+     * Method using the intent coming from RecipeDetailsFragment to populate the details fragment
+     * with its data and using the SupportFragmentManager to set the fragment
+     */
     private void showStepDetailsFragment(Bundle savedInstanceState, Intent receivedIntent) {
         StepDetailsFragment stepDetailsFragment = new StepDetailsFragment();
 
@@ -97,6 +109,10 @@ public class DetailsActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * @return a boolean of is the device user using is tablet and in landscape return true
+     * rather than that return false
+     */
     private boolean isTabletAndLandOrientation() {
         return getResources().getBoolean(R.bool.isTablet) &&
                 getResources().getConfiguration().orientation
