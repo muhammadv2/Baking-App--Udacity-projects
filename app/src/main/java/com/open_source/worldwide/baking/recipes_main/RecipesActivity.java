@@ -26,8 +26,6 @@ public class RecipesActivity extends AppCompatActivity
     @BindView(R.id.recipes_rv)
     RecyclerView mRecyclerView;
 
-    private MainScreenAdapter mAdapter;
-
     private ArrayList<Recipe> recipes;
 
 
@@ -39,7 +37,7 @@ public class RecipesActivity extends AppCompatActivity
         ButterKnife.bind(this);
 
         recipes = JsonUtils.getRecipesFromJson(this);
-        mAdapter = new MainScreenAdapter(this, recipes, this);
+        MainScreenAdapter mAdapter = new MainScreenAdapter(this, recipes, this);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(mAdapter);
 

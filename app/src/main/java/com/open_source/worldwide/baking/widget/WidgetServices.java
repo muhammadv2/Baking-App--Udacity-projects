@@ -5,11 +5,10 @@ import android.content.Intent;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
-import com.open_source.worldwide.baking.Constants;
 import com.open_source.worldwide.baking.JsonUtils;
 import com.open_source.worldwide.baking.R;
+import com.open_source.worldwide.baking.models.Ingredient;
 import com.open_source.worldwide.baking.models.Recipe;
-import com.open_source.worldwide.baking.recipe_details.DetailsActivity;
 
 import java.util.ArrayList;
 
@@ -25,11 +24,14 @@ public class WidgetServices extends RemoteViewsService {
 
     private class WidgeRemoteViewsFactory implements RemoteViewsFactory {
 
-        final Context mContext;
+        Context mContext;
+
+        ArrayList<Ingredient> ingredients;
 
         public WidgeRemoteViewsFactory(Context applicationContext) {
 
             mContext = applicationContext;
+            ingredients = JsonUtils.getRecipeIngredients(mContext, 0);
         }
 
         @Override
@@ -49,7 +51,7 @@ public class WidgetServices extends RemoteViewsService {
 
         @Override
         public int getCount() {
-            return 4;
+            return ingredients.size();
         }
 
         @Override
@@ -62,28 +64,17 @@ public class WidgetServices extends RemoteViewsService {
             ArrayList<Recipe> recipes = JsonUtils.getRecipesFromJson(mContext);
             Recipe recipe = recipes.get(position);
 
-            String recipeName = recipe.getName();
+            Ingredient ingredient = ingredients.get(position);
 
-            int[] images = new int[]{R.drawable.nutella_1,
-                    R.drawable.choco_2,R.drawable.yellow_3,R.drawable.straw_4};
-
-            rv.setTextViewText(R.id.main_recipe_tv_widget, recipeName);
-            rv.setImageViewResource(R.id.main_recipe_iv_widget,images[position]);
-
+            //extract and set all necessary data on views
+            String quantity_measure = ingredient.getQuantity() + " " + ingredient.getMeasure();
+            rv.setTextViewText(R.id.ingredient_measure_tv_widget, quantity_measure);
+            String ingredientDetails = "of " + ingredient.getIngredient();
+            rv.setTextViewText(R.id.ingredient_material_tv_widget, ingredientDetails);
 
             // Next, set a fill-intent, which will be used to fill in the pending intent template
             // that is set on the collection view
 
-            Intent fillInIntent = new Intent();
-            fillInIntent.putExtra(Constants.RECIPE_ID_KEY, position);
-            fillInIntent.setAction(DetailsActivity.SHOW_DETAILS_ACTION);
-            fillInIntent.putExtra(Constants.RECIPE_NAME, recipeName);
-
-            // Make it possible to distinguish the individual on-click
-
-            // action of a given item
-
-            rv.setOnClickFillInIntent(R.id.widget_container, fillInIntent);
 
             // Return the RemoteViews object.
             return rv;

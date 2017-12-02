@@ -1,13 +1,18 @@
 package com.open_source.worldwide.baking.recipe_details;
 
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -18,6 +23,7 @@ import com.open_source.worldwide.baking.JsonUtils;
 import com.open_source.worldwide.baking.R;
 import com.open_source.worldwide.baking.models.Ingredient;
 import com.open_source.worldwide.baking.models.Step;
+import com.open_source.worldwide.baking.widget.RecipeWidget;
 
 import java.util.ArrayList;
 
@@ -49,13 +55,21 @@ public class RecipeDetailsFragment extends Fragment implements StepsAdapter.OnIt
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_recipe_details, container, false);
 
-        page = getArguments().getInt(Constants.DETAILS_FRAGMENT_PAGE_ID);
-        mRecipeId = getArguments().getInt(Constants.RECIPE_ID_KEY);
+        if (getArguments() != null) {
+            page = getArguments().getInt(Constants.DETAILS_FRAGMENT_PAGE_ID);
+            mRecipeId = getArguments().getInt(Constants.RECIPE_ID_KEY);
+        }
 
         ButterKnife.bind(this, view);
         // Inflate the layout for this fragment
@@ -78,6 +92,7 @@ public class RecipeDetailsFragment extends Fragment implements StepsAdapter.OnIt
         recipeDetailsRv.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
+
     private void handleIngredientsView(int recipeId) {
         ArrayList<Ingredient> ingredients = JsonUtils.getRecipeIngredients(getActivity(), recipeId);
 
@@ -93,12 +108,36 @@ public class RecipeDetailsFragment extends Fragment implements StepsAdapter.OnIt
     }
 
     @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.add_as_widget_button) {
+            SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putInt(Constants.RECIPE_ID_KEY, mRecipeId);
+            editor.apply();
+
+            Intent intent = new Intent(getActivity(), RecipeWidget.class);
+            intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+
+            int[] ids = AppWidgetManager.getInstance(getActivity())
+                    .getAppWidgetIds(new ComponentName(getActivity(), RecipeWidget.class));
+            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
+            getActivity().sendBroadcast(intent);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onClick(int position) {
 
         //checks if its tablet and in landscape if not just send a normal intent to open the details
         //activity again with the step position and if its replace the fragments shows the content
         //to be be populated with the new content dynamically
-        if (!isTabletAndLandOrientation()) {
+        if (!getResources().getBoolean(R.bool.isTablet)) {
             Intent intent = new Intent(getActivity(), DetailsActivity.class);
             intent.putExtra(Constants.RECIPE_ID_KEY, mRecipeId);
             intent.putExtra(Constants.STEP_ID_KEY, position);
@@ -117,10 +156,5 @@ public class RecipeDetailsFragment extends Fragment implements StepsAdapter.OnIt
         }
     }
 
-    private boolean isTabletAndLandOrientation() {
-        return getResources().getBoolean(R.bool.isTablet) &&
-                getResources().getConfiguration().orientation
-                        == Configuration.ORIENTATION_LANDSCAPE;
-    }
 
 }

@@ -1,12 +1,13 @@
 package com.open_source.worldwide.baking.recipe_details;
 
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 
@@ -19,6 +20,7 @@ import butterknife.ButterKnife;
 
 
 public class DetailsActivity extends AppCompatActivity {
+//        implements FragmentManager.OnBackStackChangedListener {
 
     //Action to distinguish between intents coming from RecipesFragment and RecipesDetailsFragment
     public static final String SHOW_DETAILS_ACTION = "details";
@@ -55,7 +57,7 @@ public class DetailsActivity extends AppCompatActivity {
         final FrameLayout frameLayout = findViewById(R.id.step_details_container);
 
         //check if the device is a tablet and in landscape mode
-        if (isTabletAndLandOrientation()) {
+        if (getResources().getBoolean(R.bool.isTablet)) {
             //set the adapter on the view pager
             mViewPager.setAdapter(adapter);
 
@@ -66,7 +68,7 @@ public class DetailsActivity extends AppCompatActivity {
                 public void onPageSelected(int position) {
 
                     if (position == 1) {
-                        if (isTabletAndLandOrientation()) {
+                        if (getResources().getBoolean(R.bool.isTablet)) {
                             frameLayout.setVisibility(View.VISIBLE);
                         }
                     } else {
@@ -87,8 +89,40 @@ public class DetailsActivity extends AppCompatActivity {
                 Log.i("DetailsActivity", "onCreate: ");
                 showStepDetailsFragment(savedInstanceState, receivedIntent);
             }
+
+
         }
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        //using the help of this answer to figure how to fire onUpdate method in Widget class
+        //https://stackoverflow.com/questions/3455123/programmatically-update-widget-from-activity-service-receiver
+//        if (item.getItemId() == R.id.add_as_widget_button) {
+//            Log.i(DetailsActivity.class.toString(), "onOptionsItemSelected: ");
+
+//            Intent intent = new Intent(this, RecipeWidget.class);
+//            intent.putExtra(Constants.RECIPE_ID_KEY, 1);
+//            intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+//            // Use an array and EXTRA_APPWIDGET_IDS instead of AppWidgetManager.EXTRA_APPWIDGET_ID,
+//            // since it seems the onUpdate() is only fired on that:
+//            int[] ids = AppWidgetManager.getInstance(getApplication())
+//                    .getAppWidgetIds(new ComponentName(getApplication(), WidgetServices.class));
+//            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
+//            sendBroadcast(intent);
+
+//        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 
     /**
      * Method using the intent coming from RecipeDetailsFragment to populate the details fragment
@@ -107,19 +141,13 @@ public class DetailsActivity extends AppCompatActivity {
 
         FragmentManager supportFragmentManager = getSupportFragmentManager();
         if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                    .add(R.id.step_details_container, stepDetailsFragment).commit();
+            if (getSupportActionBar() != null && !getResources().getBoolean(R.bool.isTablet))
+                getSupportActionBar().hide();
+            supportFragmentManager
+                    .beginTransaction()
+                    .add(R.id.step_details_container, stepDetailsFragment)
+                    .commit();
         }
-    }
-
-    /**
-     * @return a boolean of is the device user using is tablet and in landscape return true
-     * rather than that return false
-     */
-    private boolean isTabletAndLandOrientation() {
-        return getResources().getBoolean(R.bool.isTablet) &&
-                getResources().getConfiguration().orientation
-                        == Configuration.ORIENTATION_LANDSCAPE;
     }
 
 }

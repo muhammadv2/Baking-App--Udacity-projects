@@ -75,7 +75,15 @@ public class StepDetailsFragment extends Fragment {
         outState.putInt(Constants.STEP_ID_KEY, mStepId);
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
+        if (getActivity().getActionBar() != null) {
+            getActivity().getActionBar().setDisplayHomeAsUpEnabled(false);
+            getActivity().getActionBar().setHomeAsUpIndicator(null);
+        }
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -85,6 +93,7 @@ public class StepDetailsFragment extends Fragment {
 
 
         return view;
+
     }
 
     @Override
@@ -160,6 +169,7 @@ public class StepDetailsFragment extends Fragment {
         });
     }
 
+
     /**
      * method that initialize exoPlayer and and set it on ExoPlayerView nad use media source built
      *
@@ -181,7 +191,6 @@ public class StepDetailsFragment extends Fragment {
 
         MediaSource mediaSource = buildMediaSource(uri);
         simpleExoPlayer.prepare(mediaSource, true, false);
-
 
     }
 

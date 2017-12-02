@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.open_source.worldwide.baking">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
+        android:fullBackupContent="@xml/backup_descriptor"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:fullBackupContent="@xml/backup_descriptor">
+        tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".recipes_main.RecipesActivity"
             android:launchMode="singleTop">
@@ -23,7 +25,7 @@
         </activity>
         <activity
             android:name=".recipe_details.DetailsActivity"
-             />
+            android:parentActivityName=".recipes_main.RecipesActivity" />
 
         <receiver android:name=".widget.RecipeWidget">
             <intent-filter>

@@ -1,8 +1,25 @@
-<ListView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/recipes_widget"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/text_light_background"
-    android:padding="@dimen/widget_margin"
-    tools:ignore="Overdraw" />
+    android:background="@drawable/border_for_widget"
+    >
+
+    <TextView
+        android:id="@+id/recipe_title_widget"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/sp20_qu"
+        android:textStyle="bold" />
+
+    <ListView
+        android:id="@+id/recipes_lv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/cardview_light_background"
+        android:padding="@dimen/widget_margin"
+        tools:ignore="Overdraw" />
+</LinearLayout>

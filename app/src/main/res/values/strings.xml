@@ -7,6 +7,8 @@
     <string name="next_step">Next Step</string>
 
     <bool name="isTablet">false</bool>
+    <string name="title_activity_widget_dialog">WidgetDialogActivity</string>
+    <string name="add_as_widget">Add as widget</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 
