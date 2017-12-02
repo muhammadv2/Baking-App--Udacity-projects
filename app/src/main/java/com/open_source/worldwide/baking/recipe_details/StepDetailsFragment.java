@@ -31,6 +31,8 @@ import butterknife.ButterKnife;
 
 public class StepDetailsFragment extends Fragment {
 
+    public static final String TAG = StepDetailsFragment.class.toString();
+
     @BindView(R.id.simple_exoplayer_view)
     SimpleExoPlayerView exoPlayerView;
 
@@ -46,14 +48,33 @@ public class StepDetailsFragment extends Fragment {
     TextView nextStep;
 
 
+    private int mStepId;
+    private int mRecipeId;
 
-    private int mStepId = 0;
-    private int mRecipeId = 0;
+    private long playerCurrentPosition;
+    private boolean isPlayWhenReady;
 
     public StepDetailsFragment() {
         // Required empty public constructor
 
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        if (simpleExoPlayer != null) {
+            playerCurrentPosition = simpleExoPlayer.getCurrentPosition();
+            isPlayWhenReady = simpleExoPlayer.getPlayWhenReady();
+        }
+
+        outState.putBoolean(Constants.PLAYER_CURRENT_STATE, isPlayWhenReady);
+        outState.putLong(Constants.PLAYER_CURRENT_POSITION, playerCurrentPosition);
+
+        outState.putInt(Constants.RECIPE_ID_KEY, mRecipeId);
+        outState.putInt(Constants.STEP_ID_KEY, mStepId);
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -71,9 +92,17 @@ public class StepDetailsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         //update the value of mRecipeId and mStepId with the passed values from the constructor
-        if (getArguments() != null) {
+        if (getArguments() != null && savedInstanceState == null) {
+
             mRecipeId = getArguments().getInt(Constants.RECIPE_ID_KEY);
             mStepId = getArguments().getInt(Constants.STEP_ID_KEY);
+        }
+
+        if (savedInstanceState != null) {
+            mRecipeId = savedInstanceState.getInt(Constants.RECIPE_ID_KEY);
+            mStepId = savedInstanceState.getInt(Constants.STEP_ID_KEY);
+            isPlayWhenReady = savedInstanceState.getBoolean(Constants.PLAYER_CURRENT_STATE);
+            playerCurrentPosition = savedInstanceState.getLong(Constants.PLAYER_CURRENT_POSITION);
         }
 
         getStepDetailsAndSetTheContents();
@@ -83,7 +112,7 @@ public class StepDetailsFragment extends Fragment {
     private void getStepDetailsAndSetTheContents() {
         //get all the steps objects from the json associated with it
         final ArrayList<Step> steps = JsonUtils.getStepsFromJson(getActivity(), mRecipeId);
-        Step step = steps.get(mStepId); // get the correct step with the help of passed mStepId
+        Step step = steps.get(mStepId); // get the correct step with the help of passed stepId
 
         //extract the video url that could be saved in different keys
         String stepVideo = step.getVideoURL();
@@ -109,6 +138,8 @@ public class StepDetailsFragment extends Fragment {
                 if (mStepId > 0)
                     --mStepId;
 
+                playerCurrentPosition = 0;
+                isPlayWhenReady = false;
                 getStepDetailsAndSetTheContents();
 
             }
@@ -121,6 +152,8 @@ public class StepDetailsFragment extends Fragment {
                 if (mStepId < steps.size() - 1)
                     ++mStepId;
 
+                playerCurrentPosition = 0;
+                isPlayWhenReady = false;
                 getStepDetailsAndSetTheContents();
 
             }
@@ -140,10 +173,16 @@ public class StepDetailsFragment extends Fragment {
 
         exoPlayerView.setPlayer(simpleExoPlayer);
 
-        simpleExoPlayer.setPlayWhenReady(true);
+        exoPlayerView.showController();
+        exoPlayerView.setUseController(true);
+
+        simpleExoPlayer.seekTo(playerCurrentPosition);
+        simpleExoPlayer.setPlayWhenReady(isPlayWhenReady);
 
         MediaSource mediaSource = buildMediaSource(uri);
         simpleExoPlayer.prepare(mediaSource, true, false);
+
+
     }
 
     /**
@@ -171,8 +210,9 @@ public class StepDetailsFragment extends Fragment {
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
+    public void onDestroy() {
+        super.onDestroy();
+
         releasePlayer();
     }
 

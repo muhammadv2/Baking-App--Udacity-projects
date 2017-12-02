@@ -27,4 +27,6 @@ public final class Constants {
     public static final String DETAILS_FRAGMENT_PAGE_ID = "details_page";
 
     public static final String STEP_ID_KEY = "step_key";
+    public static final String PLAYER_CURRENT_POSITION ="position" ;
+    public static final String PLAYER_CURRENT_STATE = "playstate" ;
 }
