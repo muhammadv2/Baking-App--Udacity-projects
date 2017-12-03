@@ -55,8 +55,8 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
         //using picasso to set the corresponding image for every measure of ingredients using the
         //help of the static method that return the drawable resource for every measure
         Picasso.with(mContext)
-                .load(Ingredient.setCorrectImage(ingredient.getMeasure())).
-                into(holder.ingredientView);
+                .load(Ingredient.setCorrectImage(ingredient.getMeasure()))
+                .into(holder.ingredientView);
 
     }
 

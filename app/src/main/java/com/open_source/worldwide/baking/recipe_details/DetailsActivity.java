@@ -28,6 +28,8 @@ public class DetailsActivity extends AppCompatActivity {
     @BindView(R.id.view_pager)
     ViewPager mViewPager;
 
+    StepDetailsFragment mStepDetailsFragment;
+
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,6 +92,12 @@ public class DetailsActivity extends AppCompatActivity {
                 showStepDetailsFragment(savedInstanceState, receivedIntent);
             }
 
+            if (mStepDetailsFragment != null) {
+                if ( getSupportActionBar() != null
+                        && !getResources().getBoolean(R.bool.isTablet)) {
+                    getSupportActionBar().hide();
+                }
+            }
 
         }
     }
@@ -129,7 +137,7 @@ public class DetailsActivity extends AppCompatActivity {
      * with its data and using the SupportFragmentManager to set the fragment
      */
     private void showStepDetailsFragment(Bundle savedInstanceState, Intent receivedIntent) {
-        StepDetailsFragment stepDetailsFragment = new StepDetailsFragment();
+        mStepDetailsFragment = new StepDetailsFragment();
 
         Bundle bundle = new Bundle();
         bundle.putInt(Constants.STEP_ID_KEY,
@@ -137,15 +145,14 @@ public class DetailsActivity extends AppCompatActivity {
         bundle.putInt(Constants.RECIPE_ID_KEY,
                 receivedIntent.getIntExtra(Constants.RECIPE_ID_KEY, 0));
 
-        stepDetailsFragment.setArguments(bundle);
+        mStepDetailsFragment.setArguments(bundle);
 
         FragmentManager supportFragmentManager = getSupportFragmentManager();
         if (savedInstanceState == null) {
-            if (getSupportActionBar() != null && !getResources().getBoolean(R.bool.isTablet))
-                getSupportActionBar().hide();
+
             supportFragmentManager
                     .beginTransaction()
-                    .add(R.id.step_details_container, stepDetailsFragment)
+                    .add(R.id.step_details_container, mStepDetailsFragment)
                     .commit();
         }
     }

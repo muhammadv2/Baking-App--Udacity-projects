@@ -4,8 +4,11 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.util.Log;
 import android.widget.RemoteViews;
 
+import com.open_source.worldwide.baking.Constants;
 import com.open_source.worldwide.baking.R;
 
 /**
@@ -15,6 +18,11 @@ public class RecipeWidget extends AppWidgetProvider {
 
     private static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                         int appWidgetId) {
+
+        SharedPreferences sharedPreferences = context.getSharedPreferences("shr", Context.MODE_PRIVATE);
+        int recipeId = sharedPreferences.getInt(Constants.RECIPE_ID_KEY, 0);
+
+        Log.i("widget", "updateAppWidget: " + recipeId);
 
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.recipe_widget);

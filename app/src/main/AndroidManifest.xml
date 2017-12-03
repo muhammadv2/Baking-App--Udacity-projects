@@ -27,6 +27,7 @@
             android:name=".recipe_details.DetailsActivity"
             android:parentActivityName=".recipes_main.RecipesActivity" />
 
+
         <receiver android:name=".widget.RecipeWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -41,6 +42,11 @@
             android:name=".widget.WidgetServices"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
 
+        <activity android:name=".widget.AppWidgetConfiguration">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

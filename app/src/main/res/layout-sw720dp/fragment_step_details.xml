@@ -11,11 +11,29 @@
         android:orientation="vertical"
         tools:context="com.open_source.worldwide.baking.recipe_details.StepDetailsFragment">
 
-        <com.google.android.exoplayer2.ui.SimpleExoPlayerView
-            android:id="@+id/simple_exoplayer_view"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="429dp"
-            app:controller_layout_id="@layout/exo_player_controller_ui" />
+            android:layout_height="wrap_content">
+
+            <ProgressBar
+                android:id="@+id/progress_loading"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:visibility="gone" />
+
+            <com.google.android.exoplayer2.ui.SimpleExoPlayerView
+                android:id="@+id/simple_exoplayer_view"
+                android:layout_width="match_parent"
+                android:layout_height="429dp"
+                app:controller_layout_id="@layout/exo_player_controller_ui" />
+
+            <ImageView
+                android:id="@+id/thumbnail_step_details"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp240_qu"
+                tools:ignore="ContentDescription" />
+        </FrameLayout>
 
         <TextView
             android:id="@+id/step_details_description_tv"

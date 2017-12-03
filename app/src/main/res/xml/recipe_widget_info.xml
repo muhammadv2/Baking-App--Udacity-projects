@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:configure="com.open_source.worldwide.baking.widget.AppWidgetConfiguration"
     android:initialKeyguardLayout="@layout/recipe_widget"
     android:initialLayout="@layout/recipe_widget"
     android:minHeight="160dp"

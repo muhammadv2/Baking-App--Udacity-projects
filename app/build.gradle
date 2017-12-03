@@ -43,5 +43,7 @@ dependencies {
     androidTestCompile 'com.android.support.test.espresso:espresso-intents:3.0.1'
     androidTestCompile 'com.android.support.test.espresso:espresso-contrib:3.0.1'
 
+    compile 'com.github.wseemann:FFmpegMediaMetadataRetriever:1.0.14'
+
 
 }
