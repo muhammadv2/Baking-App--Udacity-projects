@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/dp32_qu"
+    tools:context="com.open_source.worldwide.baking.widget.AppWidgetConfiguration">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp16_qu"
+        android:text="@string/show_one_recipe"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/sp20_qu"
+        android:textStyle="bold" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/recipe_one_rb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="updateRecipeId"
+            android:text="@string/nutella_pie" />
+
+        <RadioButton
+            android:id="@+id/recipe_two_rb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="updateRecipeId"
+            android:text="@string/brownies" />
+
+        <RadioButton
+            android:id="@+id/recipe_three_rb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="updateRecipeId"
+            android:text="@string/yellow_cake" />
+
+        <RadioButton
+            android:id="@+id/recipe_four_rb"
+            android:layout_width="match_parent"
+            android:onClick="updateRecipeId"
+            android:layout_height="wrap_content"
+            android:text="@string/cheesecake" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/add_to_widget_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/dp16_qu"
+        android:background="@android:color/holo_green_light"
+        android:padding="@dimen/dp8_qu"
+        android:onClick="updateWidget"
+        android:text="@string/add_as_widget" />
+</LinearLayout>

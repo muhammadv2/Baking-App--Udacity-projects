@@ -5,49 +5,50 @@ import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.open_source.worldwide.baking.Constants;
+import com.open_source.worldwide.baking.JsonUtils;
 import com.open_source.worldwide.baking.R;
+import com.open_source.worldwide.baking.models.Recipe;
 
-/**
- * Implementation of App Widget functionality.
- */
+import java.util.ArrayList;
+
+
 public class RecipeWidget extends AppWidgetProvider {
+
+
+    private static final String TAG = RecipeWidget.class.toString();
 
     private static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                         int appWidgetId) {
 
-        SharedPreferences sharedPreferences = context.getSharedPreferences("shr", Context.MODE_PRIVATE);
-        int recipeId = sharedPreferences.getInt(Constants.RECIPE_ID_KEY, 0);
-
-        Log.i("widget", "updateAppWidget: " + recipeId);
-
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.recipe_widget);
 
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        int recipeId = prefs.getInt(Constants.RECIPE_ID_KEY, 0);
+        Log.i(TAG, "updateAppWidget: " + appWidgetId);
+
         Intent intent = new Intent(context, WidgetServices.class);
+//        intent.putExtra(Constants.RECIPE_ID_KEY, recipeId);
+        intent.setData(Uri.fromParts("content", String.valueOf(recipeId), null));
 
-        // Set up the RemoteViews object to use a RemoteViews adapter.
-        // This adapter connects to a RemoteViewsService through the specified intent.
-        // This is how you populate the data.
+        ArrayList<Recipe> recipes = JsonUtils.getRecipesFromJson(context);
+        Recipe recipe = recipes.get(recipeId);
+        
+        views.setTextViewText(R.id.recipe_title_widget, recipe.getName());
+
         views.setRemoteAdapter(R.id.recipes_lv, intent);
-
-//
-//        Intent startActivityIntent = new Intent(context, DetailsActivity.class);
-//        PendingIntent startActivityPendingIntent =
-//                PendingIntent.getActivity(context,
-//                        0,
-//                        startActivityIntent,
-//                        PendingIntent.FLAG_UPDATE_CURRENT);
-//
-//        views.setPendingIntentTemplate(R.id.recipes_lv, startActivityPendingIntent);
-
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
+
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -65,6 +66,13 @@ public class RecipeWidget extends AppWidgetProvider {
     @Override
     public void onDisabled(Context context) {
         // Enter relevant functionality for when the last widget is disabled
+    }
+
+    @Override
+    public void onDeleted(Context context, int[] appWidgetIds) {
+        super.onDeleted(context, appWidgetIds);
+
+
     }
 }
 

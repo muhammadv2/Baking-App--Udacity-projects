@@ -6,8 +6,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 
@@ -100,35 +98,6 @@ public class DetailsActivity extends AppCompatActivity {
             }
 
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        //using the help of this answer to figure how to fire onUpdate method in Widget class
-        //https://stackoverflow.com/questions/3455123/programmatically-update-widget-from-activity-service-receiver
-//        if (item.getItemId() == R.id.add_as_widget_button) {
-//            Log.i(DetailsActivity.class.toString(), "onOptionsItemSelected: ");
-
-//            Intent intent = new Intent(this, RecipeWidget.class);
-//            intent.putExtra(Constants.RECIPE_ID_KEY, 1);
-//            intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-//            // Use an array and EXTRA_APPWIDGET_IDS instead of AppWidgetManager.EXTRA_APPWIDGET_ID,
-//            // since it seems the onUpdate() is only fired on that:
-//            int[] ids = AppWidgetManager.getInstance(getApplication())
-//                    .getAppWidgetIds(new ComponentName(getApplication(), WidgetServices.class));
-//            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
-//            sendBroadcast(intent);
-
-//        }
-
-        return super.onOptionsItemSelected(item);
     }
 
 

@@ -100,41 +100,7 @@ public class RecipeDetailsFragment extends Fragment implements StepsAdapter.OnIt
         recipeDetailsRv.setAdapter(stepsAdapter);
     }
 
-//    @Override
-//    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-//        super.onCreateContextMenu(menu, v, menuInfo);
-//    }
 //
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        if (item.getItemId() == R.id.add_as_widget_button) {
-//
-////            Log.i("RecipeDetails", "onOptionsItemSelected: ");
-////            Context context = getActivity();
-////            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(getActivity());
-////            RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.recipe_widget);
-////            ComponentName thisWidget = new ComponentName(context, RecipeWidget.class);
-////            Intent intent = new Intent(context, WidgetServices.class);
-////
-////            remoteViews.setRemoteAdapter(R.id.recipes_lv, intent);
-////            appWidgetManager.updateAppWidget(thisWidget, remoteViews);
-//
-//
-//            SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-//            SharedPreferences.Editor editor = sharedPref.edit();
-//            editor.putInt(Constants.RECIPE_ID_KEY, mRecipeId);
-//            editor.apply();
-//
-//            Intent intent = new Intent(getActivity(), RecipeWidget.class);
-//            intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-//
-//            int[] ids = AppWidgetManager.getInstance(getActivity())
-//                    .getAppWidgetIds(new ComponentName(getActivity(), RecipeWidget.class));
-//            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
-//            getActivity().sendBroadcast(intent);
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
 
     @Override
     public void onClick(int position) {
