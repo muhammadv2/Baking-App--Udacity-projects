@@ -28,7 +28,6 @@ import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.open_source.worldwide.baking.Constants;
-import com.open_source.worldwide.baking.JsonUtils;
 import com.open_source.worldwide.baking.R;
 import com.open_source.worldwide.baking.models.Step;
 
@@ -70,6 +69,8 @@ public class StepDetailsFragment extends Fragment
 
     private String mUrl;
 
+    private ArrayList<Step> steps;
+
     public StepDetailsFragment() {
         // Required empty public constructor
 
@@ -86,6 +87,8 @@ public class StepDetailsFragment extends Fragment
 
         outState.putBoolean(Constants.PLAYER_CURRENT_STATE, isPlayWhenReady);
         outState.putLong(Constants.PLAYER_CURRENT_POSITION, playerCurrentPosition);
+
+        outState.putParcelableArrayList(Constants.STEP_Key, steps);
 
         outState.putInt(Constants.RECIPE_ID_KEY, mRecipeId);
         outState.putInt(Constants.STEP_ID_KEY, mStepId);
@@ -118,9 +121,9 @@ public class StepDetailsFragment extends Fragment
 
         //update the value of mRecipeId and mStepId with the passed values from the constructor
         if (getArguments() != null && savedInstanceState == null) {
-
             mRecipeId = getArguments().getInt(Constants.RECIPE_ID_KEY);
             mStepId = getArguments().getInt(Constants.STEP_ID_KEY);
+            steps = getArguments().getParcelableArrayList(Constants.STEP_Key);
         }
 
         if (savedInstanceState != null) {
@@ -128,6 +131,7 @@ public class StepDetailsFragment extends Fragment
             mStepId = savedInstanceState.getInt(Constants.STEP_ID_KEY);
             isPlayWhenReady = savedInstanceState.getBoolean(Constants.PLAYER_CURRENT_STATE);
             playerCurrentPosition = savedInstanceState.getLong(Constants.PLAYER_CURRENT_POSITION);
+            steps = savedInstanceState.getParcelableArrayList(Constants.STEP_Key);
         }
 
         getStepDetailsAndSetTheContents();
@@ -136,7 +140,6 @@ public class StepDetailsFragment extends Fragment
 
     private void getStepDetailsAndSetTheContents() {
         //get all the steps objects from the json associated with it
-        final ArrayList<Step> steps = JsonUtils.getStepsFromJson(getActivity(), mRecipeId);
         Step step = steps.get(mStepId); // get the correct step with the help of passed stepId
 
         //extract the video url that could be saved in different keys
@@ -173,6 +176,7 @@ public class StepDetailsFragment extends Fragment
                 playerCurrentPosition = 0;
                 isPlayWhenReady = false;
                 getStepDetailsAndSetTheContents();
+//                getActivity().getSupportLoaderManager().restartLoader(505, null, stepLoader);
 
             }
         });
@@ -187,6 +191,8 @@ public class StepDetailsFragment extends Fragment
                 playerCurrentPosition = 0;
                 isPlayWhenReady = false;
                 getStepDetailsAndSetTheContents();
+//                getActivity().getSupportLoaderManager().restartLoader(505, null, stepLoader);
+
 
             }
         });
@@ -298,10 +304,9 @@ public class StepDetailsFragment extends Fragment
 
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onStop() {
+        super.onStop();
         releasePlayer();
-
     }
 
     private void releasePlayer() {

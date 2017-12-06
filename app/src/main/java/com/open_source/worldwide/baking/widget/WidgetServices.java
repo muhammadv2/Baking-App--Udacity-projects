@@ -2,10 +2,12 @@ package com.open_source.worldwide.baking.widget;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
-import com.open_source.worldwide.baking.JsonUtils;
+import com.open_source.worldwide.baking.Constants;
 import com.open_source.worldwide.baking.R;
 import com.open_source.worldwide.baking.models.Ingredient;
 
@@ -15,28 +17,31 @@ public class WidgetServices extends RemoteViewsService {
 
     private int recipeId;
 
+    private ArrayList<Ingredient> ingredients = new ArrayList<>();
 
     public RemoteViewsService.RemoteViewsFactory onGetViewFactory(Intent intent) {
 
-        if (intent.getData() != null)
+        if (intent.getData() != null) {
             recipeId = Integer.valueOf(intent.getData().getSchemeSpecificPart());
-
+            Bundle bundle = intent.getBundleExtra("bundle");
+            ingredients = bundle.getParcelableArrayList(Constants.INGREDIENT_KEY);
+            Log.i("WidgetServices", "onGetViewFactory: " + ingredients);
+        }
 
         return new WidgeRemoteViewsFactory(this.getApplicationContext()) {
         };
 
     }
 
+
     private class WidgeRemoteViewsFactory implements RemoteViewsFactory {
 
         Context mContext;
-        ArrayList<Ingredient> ingredients;
+
 
         public WidgeRemoteViewsFactory(Context applicationContext) {
 
             mContext = applicationContext;
-            ingredients = JsonUtils.getRecipeIngredients(mContext, recipeId);
-
         }
 
         @Override

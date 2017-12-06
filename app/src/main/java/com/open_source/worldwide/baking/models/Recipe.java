@@ -14,9 +14,7 @@ public final class Recipe {
         mServings = recipeServing;
         mImageUrl = recipeImage;
 
-
     }
-
 
     public String getName() {
         return mName;
@@ -26,4 +24,7 @@ public final class Recipe {
         return mServings;
     }
 
+    public String getmImageUrl() {
+        return mImageUrl;
+    }
 }

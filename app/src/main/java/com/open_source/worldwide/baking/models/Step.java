@@ -1,7 +1,24 @@
 package com.open_source.worldwide.baking.models;
 
 
-public final class Step {
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.support.annotation.NonNull;
+
+public final class Step implements Parcelable {
+
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        @NonNull
+        @Override
+        public Step createFromParcel(Parcel in) {
+            return new Step(in);
+        }
+
+        @Override
+        public Step[] newArray(int size) {
+            return new Step[size];
+        }
+    };
 
     private final Integer stepId;
     private final String shortDescription;
@@ -20,6 +37,10 @@ public final class Step {
 
     }
 
+    public Integer getStepId() {
+        return stepId;
+    }
+
     public String getShortDescription() {
         return shortDescription;
     }
@@ -35,6 +56,31 @@ public final class Step {
 
     public String getThumbnailURL() {
         return thumbnailURL;
+    }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+        dest.writeInt(stepId);
+        dest.writeString(shortDescription);
+        dest.writeString(description);
+        dest.writeString(videoURL);
+        dest.writeString(thumbnailURL);
+    }
+
+    private Step(Parcel in) {
+
+        stepId = in.readInt();
+        shortDescription = in.readString();
+        description = in.readString();
+        videoURL = in.readString();
+        thumbnailURL = in.readString();
     }
 
 

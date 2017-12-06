@@ -91,7 +91,7 @@ public class DetailsActivity extends AppCompatActivity {
             }
 
             if (mStepDetailsFragment != null) {
-                if ( getSupportActionBar() != null
+                if (getSupportActionBar() != null
                         && !getResources().getBoolean(R.bool.isTablet)) {
                     getSupportActionBar().hide();
                 }
@@ -113,6 +113,8 @@ public class DetailsActivity extends AppCompatActivity {
                 receivedIntent.getIntExtra(Constants.STEP_ID_KEY, 0));
         bundle.putInt(Constants.RECIPE_ID_KEY,
                 receivedIntent.getIntExtra(Constants.RECIPE_ID_KEY, 0));
+        bundle.putParcelableArrayList(Constants.STEP_Key,
+                receivedIntent.getParcelableArrayListExtra(Constants.STEP_Key));
 
         mStepDetailsFragment.setArguments(bundle);
 

@@ -27,13 +27,14 @@ public class MainScreenAdapter extends RecyclerView.Adapter<MainScreenAdapter.Ma
 
     /**
      * Constructor that takes arguments helps set up the adapter
-     * @param context to be used with Picasso library
-     * @param recipes list of recipes will be shown
+     *
+     * @param context             to be used with Picasso library
+     * @param recipes             list of recipes will be shown
      * @param onItemClickListener interface with onclick method to listen on adapter item clicks
      */
-     public MainScreenAdapter(Context context, ArrayList<Recipe> recipes, OnItemClickListener onItemClickListener) {
-         mContext = context;
-         mRecipes = recipes;
+    public MainScreenAdapter(Context context, ArrayList<Recipe> recipes, OnItemClickListener onItemClickListener) {
+        mContext = context;
+        mRecipes = recipes;
         mItemClickListener = onItemClickListener;
     }
 
@@ -65,9 +66,17 @@ public class MainScreenAdapter extends RecyclerView.Adapter<MainScreenAdapter.Ma
 
         if (recipe == null) return;
 
-        //use already added images to populate the image view of the main screen
-        setImageOnRecipes(position, holder.recipeImage);
 
+        if (!recipe.getmImageUrl().equals("")) {
+            Picasso.with(mContext)
+                    .load(recipe.getmImageUrl())
+                    .fit()
+                    .into(holder.recipeImage);
+
+        } else {
+            //use already added images to populate the image view of the main screen
+            setImageOnRecipes(position, holder.recipeImage);
+        }
         String servings = " Servings " + recipe.getServings();
 
         //extract and set all necessary data on views

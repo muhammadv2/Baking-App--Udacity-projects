@@ -2,10 +2,14 @@ package com.open_source.worldwide.baking.recipe_details;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +17,9 @@ import android.view.ViewGroup;
 import com.open_source.worldwide.baking.Adapters.IngredientAdapter;
 import com.open_source.worldwide.baking.Adapters.StepsAdapter;
 import com.open_source.worldwide.baking.Constants;
-import com.open_source.worldwide.baking.JsonUtils;
 import com.open_source.worldwide.baking.R;
+import com.open_source.worldwide.baking.loaders.IngredientsLoader;
+import com.open_source.worldwide.baking.loaders.StepsLoader;
 import com.open_source.worldwide.baking.models.Ingredient;
 import com.open_source.worldwide.baking.models.Step;
 
@@ -30,9 +35,71 @@ public class RecipeDetailsFragment extends Fragment implements StepsAdapter.OnIt
 
     private int mRecipeId;
 
+    ArrayList<Step> mSteps;
+
+
     public RecipeDetailsFragment() {
         // Required empty public constructor
     }
+
+    private LoaderManager.LoaderCallbacks<ArrayList> ingredientLoader =
+            new LoaderManager.LoaderCallbacks<ArrayList>() {
+                @NonNull
+                @Override
+                public Loader<ArrayList> onCreateLoader(int id, Bundle args) {
+                    return new IngredientsLoader(getContext(), mRecipeId);
+                }
+
+                @Override
+                public void onLoadFinished(Loader<ArrayList> loader, ArrayList data) {
+
+                    if (data != null) {
+                        handleIngredientsView(data);
+                    }
+
+                }
+
+                @Override
+                public void onLoaderReset(Loader<ArrayList> loader) {
+
+                }
+            };
+
+    private void handleIngredientsView(ArrayList<Ingredient> ingredients) {
+
+        IngredientAdapter ingredientAdapter = new IngredientAdapter(getActivity(), ingredients);
+        recipeDetailsRv.setAdapter(ingredientAdapter);
+    }
+
+
+    private LoaderManager.LoaderCallbacks<ArrayList> stepsLoader =
+            new LoaderManager.LoaderCallbacks<ArrayList>() {
+                @NonNull
+                @Override
+                public Loader<ArrayList> onCreateLoader(int id, Bundle args) {
+                    return new StepsLoader(getContext(), mRecipeId);
+                }
+
+                @Override
+                public void onLoadFinished(Loader<ArrayList> loader, ArrayList data) {
+                    if (data != null) {
+                        handleStepsView(data);
+                    }
+
+                }
+
+                @Override
+                public void onLoaderReset(Loader<ArrayList> loader) {
+                    handleStepsView(null);
+                }
+            };
+
+    private void handleStepsView(ArrayList<Step> steps) {
+        StepsAdapter stepsAdapter = new StepsAdapter(getActivity(), steps, this);
+        recipeDetailsRv.setAdapter(stepsAdapter);
+        mSteps = steps;
+    }
+
 
     // Store instance variables
     private int page;
@@ -75,32 +142,16 @@ public class RecipeDetailsFragment extends Fragment implements StepsAdapter.OnIt
 
         if (page == 0) {
 
-            handleIngredientsView(mRecipeId);
+            getActivity().getSupportLoaderManager().initLoader(202, null, ingredientLoader);
         } else {
 
-            handleStepsView(mRecipeId);
+            getActivity().getSupportLoaderManager().initLoader(303, null, stepsLoader);
         }
 
         recipeDetailsRv.setHasFixedSize(true);
         recipeDetailsRv.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
-
-    private void handleIngredientsView(int recipeId) {
-        ArrayList<Ingredient> ingredients = JsonUtils.getRecipeIngredients(getActivity(), recipeId);
-
-        IngredientAdapter ingredientAdapter = new IngredientAdapter(getActivity(), ingredients);
-        recipeDetailsRv.setAdapter(ingredientAdapter);
-    }
-
-    private void handleStepsView(int recipeId) {
-        ArrayList<Step> steps = JsonUtils.getStepsFromJson(getActivity(), recipeId);
-
-        StepsAdapter stepsAdapter = new StepsAdapter(getActivity(), steps, this);
-        recipeDetailsRv.setAdapter(stepsAdapter);
-    }
-
-//
 
     @Override
     public void onClick(int position) {
@@ -112,12 +163,17 @@ public class RecipeDetailsFragment extends Fragment implements StepsAdapter.OnIt
             Intent intent = new Intent(getActivity(), DetailsActivity.class);
             intent.putExtra(Constants.RECIPE_ID_KEY, mRecipeId);
             intent.putExtra(Constants.STEP_ID_KEY, position);
+            intent.putExtra(Constants.STEP_Key, mSteps);
+            Log.i("RecipeDetailsFragment", "onClick: " + mSteps);
+
             startActivity(intent);
         } else {
             StepDetailsFragment stepDetailsFragment = new StepDetailsFragment();
             Bundle bundle = new Bundle();
             bundle.putInt(Constants.STEP_ID_KEY, position);
             bundle.putInt(Constants.RECIPE_ID_KEY, mRecipeId);
+            bundle.putParcelableArrayList(Constants.STEP_Key, mSteps);
+            Log.i("RecipeDetailsFragment", "onClick: " + mSteps);
 
             stepDetailsFragment.setArguments(bundle);
             getActivity().getSupportFragmentManager().
