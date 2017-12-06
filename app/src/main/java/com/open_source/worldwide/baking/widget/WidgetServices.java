@@ -3,7 +3,6 @@ package com.open_source.worldwide.baking.widget;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
@@ -25,7 +24,6 @@ public class WidgetServices extends RemoteViewsService {
             recipeId = Integer.valueOf(intent.getData().getSchemeSpecificPart());
             Bundle bundle = intent.getBundleExtra("bundle");
             ingredients = bundle.getParcelableArrayList(Constants.INGREDIENT_KEY);
-            Log.i("WidgetServices", "onGetViewFactory: " + ingredients);
         }
 
         return new WidgeRemoteViewsFactory(this.getApplicationContext()) {

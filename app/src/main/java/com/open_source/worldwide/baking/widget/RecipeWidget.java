@@ -9,7 +9,6 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.open_source.worldwide.baking.Constants;
@@ -25,9 +24,6 @@ public class RecipeWidget extends AppWidgetProvider {
     private static int recipeId;
 
     private static ArrayList<Ingredient> ingredients;
-
-
-    private static final String TAG = RecipeWidget.class.toString();
 
     private static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                         int appWidgetId) {
@@ -45,7 +41,6 @@ public class RecipeWidget extends AppWidgetProvider {
         bundle.putParcelableArrayList(Constants.INGREDIENT_KEY, ingredients);
         intent.setData(Uri.fromParts("content", String.valueOf(recipeId), null));
         intent.putExtra("bundle", bundle);
-        Log.i(TAG, "updateAppWidget: " + ingredients);
 
         views.setTextViewText(R.id.recipe_title_widget, recipeName);
 
@@ -79,7 +74,6 @@ public class RecipeWidget extends AppWidgetProvider {
         if (appWidgetIds != null && appWidgetIds.length > 0) {
             onUpdate(context, appWidgetManager, appWidgetIds);
         }
-        Log.i(TAG, "onReceive: " + (ingredients == null));
     }
 
     @Override
